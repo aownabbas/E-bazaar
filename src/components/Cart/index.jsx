@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { _getAllCardItems } from "../../redux/action/cartActions";
+import getCartItems from "../../redux/action/cartActions";
 
 export default function Cart({ className, type }) {
 const dispatch=useDispatch();
@@ -9,7 +9,7 @@ const dispatch=useDispatch();
   const [CheckoutItems,setCheckoutItems]=useState([{text:"Product 1",price:1200},{text:"Product 2",price:1300},{text:"Product 3",price:1400}])
   const onCheckoutItems=()=>{
     // CheckoutItems.push()
-    dispatch(_getAllCardItems("hello"));
+    dispatch(getCartItems(CheckoutItems));
   }
   return (
     <>

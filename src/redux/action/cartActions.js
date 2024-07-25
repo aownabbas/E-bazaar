@@ -1,11 +1,17 @@
-export const CART_ITEMS = "CART_ITEMS";
+import { CART_ITEMS } from "../types";
 
-export const _getAllCardItems = (data) => {
-    console.log(data,"33333");
-  return (dispatch) => {
-    dispatch({
-      type: CART_ITEMS,
-      payload: data,
-    });
-  };
-};
+export const _getItem=(data)=>{
+    console.log(data, "on action");
+    return{
+        type:CART_ITEMS,
+        payload:data
+    }
+    }
+
+const getCartItems=(params)=>{
+    return(dispatch)=>{
+        console.log(params, "before action")
+        dispatch(_getItem(params))
+    }
+}
+export default getCartItems

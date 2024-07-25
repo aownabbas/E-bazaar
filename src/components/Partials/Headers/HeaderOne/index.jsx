@@ -6,7 +6,7 @@ import TopBar from "./TopBar";
 import { useSelector } from "react-redux";
 
 export default function HeaderOne({ className, drawerAction, type = 1 }) {
-  const items = useSelector((state) => state._items);
+  const items = useSelector((state) => state._items.cartItems);
 console.log(items,"111222");
   return (
     <header className={` ${className || ""} header-section-wrapper relative`}>
