@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import Cart from "../../../Cart";
 import Compair from "../../../Helpers/icons/Compair";
 import ThinBag from "../../../Helpers/icons/ThinBag";
@@ -7,6 +8,10 @@ import SearchBox from "../../../Helpers/SearchBox";
 import { Link } from "react-router-dom";
 
 export default function Middlebar({ className, type }) {
+
+  const items = useSelector((state) => state._items.cartItems);
+    console.log(items,"99999999");
+
   return (
     <div className={`w-full h-[86px] bg-white ${className}`}>
       <div className="container-x mx-auto h-full">
@@ -87,13 +92,15 @@ export default function Middlebar({ className, type }) {
                       <ThinBag />
                     </span>
                   </Link>
-                  {/* <span
+                  {items && items.length > 0 &&
+                  <span
                     className={`w-[18px] h-[18px] rounded-full  absolute -top-2.5 -right-2.5 flex justify-center items-center text-[9px] ${
                       type === 3 ? "bg-qh3-blue text-white" : "bg-qyellow"
                     }`}
                   >
-                    15
-                  </span> */}
+                    {items && items?.length}
+                  </span>
+}
                 </div>
                 {/* <div className="fixed left-0 top-0 w-full h-full z-40"></div> */}
                 {/* hidden group-hover:block" */}

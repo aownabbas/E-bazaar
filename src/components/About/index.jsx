@@ -8,11 +8,9 @@ import Layout from "../Partials/Layout";
 
 import blog from "../../data/blogs.json";
 import DataIteration from "../Helpers/DataIteration";
-import { useSelector } from "react-redux";
 
 export default function About() {
-  const items = useSelector((state) => state._items.cartItems);
-  console.log(items,"99999999");
+  
   const settings = {
     slidesToShow: 3,
     slidesToScroll: 3,

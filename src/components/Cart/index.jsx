@@ -1,16 +1,39 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import getCartItems from "../../redux/action/cartActions";
 
 export default function Cart({ className, type }) {
-const dispatch=useDispatch();
-// const _items = useSelector((state) => state._items);
-// console.log(_items,"111222");
-  const [CheckoutItems,setCheckoutItems]=useState([{text:"Product 1",price:1200},{text:"Product 2",price:1300},{text:"Product 3",price:1400}])
-  const onCheckoutItems=()=>{
-    // CheckoutItems.push()
-    dispatch(getCartItems(CheckoutItems));
-  }
+
+  const dispatch = useDispatch();
+  const items = useSelector((state) => state._items.cartItems);
+  const [sortedArray,setSortedArray]=useState([])
+  console.log(sortedArray,"hhhhhh");
+  const removeSingleItem = (itemToRemove) => {
+    const updatedItems = items.filter(item => item.id !== itemToRemove.id);
+    dispatch(getCartItems(updatedItems));
+  };
+
+  useEffect(()=>{
+
+    const itemQuantities = items.reduce((acc, item) => {
+      // If the item ID is not in the accumulator, add it
+      if (!acc[item.id]) {
+        acc[item.id] = { ...item, quantity: 1 };
+      } else {
+        // If the item ID is already in the accumulator, increment the quantity
+        acc[item.id].quantity += 1;
+      }
+      return acc;
+    }, {});
+    
+    // Step 2: Convert the aggregated items back to an array
+    const aggregatedItems = Object.values(itemQuantities);
+    setSortedArray(aggregatedItems)
+    
+
+  },[items])
+  
+
   return (
     <>
       <div
@@ -20,226 +43,55 @@ const dispatch=useDispatch();
         }  ${className || ""}`}
       >
         <div className="w-full h-full">
+        {sortedArray && sortedArray.length > 0 ? (
           <div className="product-items h-[310px] overflow-y-scroll">
-            <ul>
-              <li className="w-full h-full flex">
-                <div className="flex space-x-[6px] justify-center items-center px-4 my-[20px]">
-                  <div className="w-[65px] h-full">
-                    <img
-                      src={`${
-                        import.meta.env.VITE_PUBLIC_URL
-                      }/assets/images/product-img-1.jpg`}
-                      alt=""
-                      className="w-full h-full object-contain"
-                    />
-                  </div>
-                  <div className="flex-1 h-full flex flex-col justify-center ">
-                    <p className="title mb-2 text-[13px] font-600 text-qblack leading-4 line-clamp-2 hover:text-blue-600">
-                      iPhone 12 Pro Max 128GB Golen colour
-                    </p>
+              <ul>
+                {sortedArray.map((item) => (
+                  <li className="w-full h-full flex">
+                    <div className="flex space-x-[6px] justify-center items-center px-4 my-[20px]">
+                      <div className="w-[65px] h-full">
+                        <img
+                          src={`${
+                            import.meta.env.VITE_PUBLIC_URL
+                          }/assets/images/product-img-1.jpg`}
+                          alt=""
+                          className="w-full h-full object-contain"
+                        />
+                      </div>
+                      <div className="flex-1 h-full flex flex-col justify-center ">
+                        <p className="title mb-2 text-[13px] font-600 text-qblack leading-4 line-clamp-2 hover:text-blue-600">
+                          {item?.title}
+                        </p>
 
-                    <p className="price">
-                      <span className="offer-price text-qred font-600 text-[15px] ml-2">
-                        $38
-                      </span>
-                    </p>
-                  </div>
-                </div>
-                <span className="mt-[20px] mr-[15px] inline-flex cursor-pointer ">
-                  <svg
-                    width="8"
-                    height="8"
-                    viewBox="0 0 8 8"
-                    fill="none"
-                    className="inline fill-current text-[#AAAAAA] hover:text-qred"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M7.76 0.24C7.44 -0.08 6.96 -0.08 6.64 0.24L4 2.88L1.36 0.24C1.04 -0.08 0.56 -0.08 0.24 0.24C-0.08 0.56 -0.08 1.04 0.24 1.36L2.88 4L0.24 6.64C-0.08 6.96 -0.08 7.44 0.24 7.76C0.56 8.08 1.04 8.08 1.36 7.76L4 5.12L6.64 7.76C6.96 8.08 7.44 8.08 7.76 7.76C8.08 7.44 8.08 6.96 7.76 6.64L5.12 4L7.76 1.36C8.08 1.04 8.08 0.56 7.76 0.24Z" />
-                  </svg>
-                </span>
-              </li>
-              <li className="w-full h-full flex">
-                <div className="flex space-x-[6px] justify-center items-center px-4 my-[20px]">
-                  <div className="w-[65px] h-full">
-                    <img
-                      src={`${
-                        import.meta.env.VITE_PUBLIC_URL
-                      }/assets/images/product-img-1.jpg`}
-                      alt=""
-                      className="w-full h-full object-contain"
-                    />
-                  </div>
-                  <div className="flex-1 h-full flex flex-col justify-center ">
-                    <p className="title mb-2 text-[13px] font-600 text-qblack leading-4 line-clamp-2 hover:text-blue-600">
-                      iPhone 12 Pro Max 128GB Golen colour
-                    </p>
-
-                    <p className="price">
-                      <span className="offer-price text-qred font-600 text-[15px] ml-2">
-                        $38
-                      </span>
-                    </p>
-                  </div>
-                </div>
-                <span className="mt-[20px] mr-[15px] inline-flex cursor-pointer">
-                  <svg
-                    width="8"
-                    height="8"
-                    viewBox="0 0 8 8"
-                    fill="none"
-                    className="inline fill-current text-[#AAAAAA] hover:text-qred"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M7.76 0.24C7.44 -0.08 6.96 -0.08 6.64 0.24L4 2.88L1.36 0.24C1.04 -0.08 0.56 -0.08 0.24 0.24C-0.08 0.56 -0.08 1.04 0.24 1.36L2.88 4L0.24 6.64C-0.08 6.96 -0.08 7.44 0.24 7.76C0.56 8.08 1.04 8.08 1.36 7.76L4 5.12L6.64 7.76C6.96 8.08 7.44 8.08 7.76 7.76C8.08 7.44 8.08 6.96 7.76 6.64L5.12 4L7.76 1.36C8.08 1.04 8.08 0.56 7.76 0.24Z" />
-                  </svg>
-                </span>
-              </li>
-              <li className="w-full h-full flex">
-                <div className="flex space-x-[6px] justify-center items-center px-4 my-[20px]">
-                  <div className="w-[65px] h-full">
-                    <img
-                      src={`${
-                        import.meta.env.VITE_PUBLIC_URL
-                      }/assets/images/product-img-1.jpg`}
-                      alt=""
-                      className="w-full h-full object-contain"
-                    />
-                  </div>
-                  <div className="flex-1 h-full flex flex-col justify-center ">
-                    <p className="title mb-2 text-[13px] font-600 text-qblack leading-4 line-clamp-2 hover:text-blue-600">
-                      iPhone 12 Pro Max 128GB Golen colour
-                    </p>
-
-                    <p className="price">
-                      <span className="offer-price text-qred font-600 text-[15px] ml-2">
-                        $38
-                      </span>
-                    </p>
-                  </div>
-                </div>
-                <span className="mt-[20px] mr-[15px] inline-flex cursor-pointer">
-                  <svg
-                    width="8"
-                    height="8"
-                    viewBox="0 0 8 8"
-                    fill="none"
-                    className="inline fill-current text-[#AAAAAA] hover:text-qred"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M7.76 0.24C7.44 -0.08 6.96 -0.08 6.64 0.24L4 2.88L1.36 0.24C1.04 -0.08 0.56 -0.08 0.24 0.24C-0.08 0.56 -0.08 1.04 0.24 1.36L2.88 4L0.24 6.64C-0.08 6.96 -0.08 7.44 0.24 7.76C0.56 8.08 1.04 8.08 1.36 7.76L4 5.12L6.64 7.76C6.96 8.08 7.44 8.08 7.76 7.76C8.08 7.44 8.08 6.96 7.76 6.64L5.12 4L7.76 1.36C8.08 1.04 8.08 0.56 7.76 0.24Z" />
-                  </svg>
-                </span>
-              </li>
-              <li className="w-full h-full flex">
-                <div className="flex space-x-[6px] justify-center items-center px-4 my-[20px]">
-                  <div className="w-[65px] h-full">
-                    <img
-                      src={`${
-                        import.meta.env.VITE_PUBLIC_URL
-                      }/assets/images/product-img-1.jpg`}
-                      alt=""
-                      className="w-full h-full object-contain"
-                    />
-                  </div>
-                  <div className="flex-1 h-full flex flex-col justify-center ">
-                    <p className="title mb-2 text-[13px] font-600 text-qblack leading-4 line-clamp-2 hover:text-blue-600">
-                      iPhone 12 Pro Max 128GB Golen colour
-                    </p>
-
-                    <p className="price">
-                      <span className="offer-price text-qred font-600 text-[15px] ml-2">
-                        $38
-                      </span>
-                    </p>
-                  </div>
-                </div>
-                <span className="mt-[20px] mr-[15px] inline-flex cursor-pointer">
-                  <svg
-                    width="8"
-                    height="8"
-                    viewBox="0 0 8 8"
-                    fill="none"
-                    className="inline fill-current text-[#AAAAAA] hover:text-qred"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M7.76 0.24C7.44 -0.08 6.96 -0.08 6.64 0.24L4 2.88L1.36 0.24C1.04 -0.08 0.56 -0.08 0.24 0.24C-0.08 0.56 -0.08 1.04 0.24 1.36L2.88 4L0.24 6.64C-0.08 6.96 -0.08 7.44 0.24 7.76C0.56 8.08 1.04 8.08 1.36 7.76L4 5.12L6.64 7.76C6.96 8.08 7.44 8.08 7.76 7.76C8.08 7.44 8.08 6.96 7.76 6.64L5.12 4L7.76 1.36C8.08 1.04 8.08 0.56 7.76 0.24Z" />
-                  </svg>
-                </span>
-              </li>
-              <li className="w-full h-full flex">
-                <div className="flex space-x-[6px] justify-center items-center px-4 my-[20px]">
-                  <div className="w-[65px] h-full">
-                    <img
-                      src={`${
-                        import.meta.env.VITE_PUBLIC_URL
-                      }/assets/images/product-img-1.jpg`}
-                      alt=""
-                      className="w-full h-full object-contain"
-                    />
-                  </div>
-                  <div className="flex-1 h-full flex flex-col justify-center ">
-                    <p className="title mb-2 text-[13px] font-600 text-qblack leading-4 line-clamp-2 hover:text-blue-600">
-                      iPhone 12 Pro Max 128GB Golen colour
-                    </p>
-
-                    <p className="price">
-                      <span className="offer-price text-qred font-600 text-[15px] ml-2">
-                        $38
-                      </span>
-                    </p>
-                  </div>
-                </div>
-                <span className="mt-[20px] mr-[15px] inline-flex cursor-pointer">
-                  <svg
-                    width="8"
-                    height="8"
-                    viewBox="0 0 8 8"
-                    fill="none"
-                    className="inline fill-current text-[#AAAAAA] hover:text-qred"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M7.76 0.24C7.44 -0.08 6.96 -0.08 6.64 0.24L4 2.88L1.36 0.24C1.04 -0.08 0.56 -0.08 0.24 0.24C-0.08 0.56 -0.08 1.04 0.24 1.36L2.88 4L0.24 6.64C-0.08 6.96 -0.08 7.44 0.24 7.76C0.56 8.08 1.04 8.08 1.36 7.76L4 5.12L6.64 7.76C6.96 8.08 7.44 8.08 7.76 7.76C8.08 7.44 8.08 6.96 7.76 6.64L5.12 4L7.76 1.36C8.08 1.04 8.08 0.56 7.76 0.24Z" />
-                  </svg>
-                </span>
-              </li>
-              <li className="w-full h-full flex">
-                <div className="flex space-x-[6px] justify-center items-center px-4 my-[20px]">
-                  <div className="w-[65px] h-full">
-                    <img
-                      src={`${
-                        import.meta.env.VITE_PUBLIC_URL
-                      }/assets/images/product-img-1.jpg`}
-                      alt=""
-                      className="w-full h-full object-contain"
-                    />
-                  </div>
-                  <div className="flex-1 h-full flex flex-col justify-center ">
-                    <p className="title mb-2 text-[13px] font-600 text-qblack leading-4 line-clamp-2 hover:text-blue-600">
-                      iPhone 12 Pro Max 128GB Golen colour
-                    </p>
-
-                    <p className="price">
-                      <span className="offer-price text-qred font-600 text-[15px] ml-2">
-                        $38
-                      </span>
-                    </p>
-                  </div>
-                </div>
-                <span className="mt-[20px] mr-[15px] inline-flex cursor-pointer">
-                  <svg
-                    width="8"
-                    height="8"
-                    viewBox="0 0 8 8"
-                    fill="none"
-                    className="inline fill-current text-[#AAAAAA] hover:text-qred"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M7.76 0.24C7.44 -0.08 6.96 -0.08 6.64 0.24L4 2.88L1.36 0.24C1.04 -0.08 0.56 -0.08 0.24 0.24C-0.08 0.56 -0.08 1.04 0.24 1.36L2.88 4L0.24 6.64C-0.08 6.96 -0.08 7.44 0.24 7.76C0.56 8.08 1.04 8.08 1.36 7.76L4 5.12L6.64 7.76C6.96 8.08 7.44 8.08 7.76 7.76C8.08 7.44 8.08 6.96 7.76 6.64L5.12 4L7.76 1.36C8.08 1.04 8.08 0.56 7.76 0.24Z" />
-                  </svg>
-                </span>
-              </li>
-            </ul>
-          </div>
+                        <p className="price">
+                          <span className="offer-price text-qred font-600 text-[15px] ml-2">
+                            {item.quantity > 1 ? `${item?.quantity} x ${item?.price}` : item.price}
+                          </span>
+                        </p>
+                      </div>
+                    </div>
+                    <span className="mt-[20px] mr-[15px] inline-flex cursor-pointer" onClick={()=>removeSingleItem(item)}>
+                      <svg
+                        width="8"
+                        height="8"
+                        viewBox="0 0 8 8"
+                        fill="none"
+                        className="inline fill-current text-[#AAAAAA] hover:text-qred"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path d="M7.76 0.24C7.44 -0.08 6.96 -0.08 6.64 0.24L4 2.88L1.36 0.24C1.04 -0.08 0.56 -0.08 0.24 0.24C-0.08 0.56 -0.08 1.04 0.24 1.36L2.88 4L0.24 6.64C-0.08 6.96 -0.08 7.44 0.24 7.76C0.56 8.08 1.04 8.08 1.36 7.76L4 5.12L6.64 7.76C6.96 8.08 7.44 8.08 7.76 7.76C8.08 7.44 8.08 6.96 7.76 6.64L5.12 4L7.76 1.36C8.08 1.04 8.08 0.56 7.76 0.24Z" />
+                      </svg>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              </div>
+            ) : (
+              <div className="product-items h-[310px] overflow-y-scroll flex items-center justify-center">
+                Not any Items
+              </div>
+            )}
+          
           <div className="w-full px-4 mt-[20px] mb-[12px]">
             <div className="h-[1px] bg-[#F0F1F3]"></div>
           </div>
@@ -255,7 +107,7 @@ const dispatch=useDispatch();
                 </div>
               </a>
               <a href="#">
-                <div className="w-full h-[50px]" onClick={onCheckoutItems}>
+                <div className="w-full h-[50px]">
                   <div className={type === 3 ? "blue-btn" : "yellow-btn"}>
                     <span className="text-sm">Checkout Now</span>
                   </div>

@@ -3,12 +3,29 @@ import Compair from "../icons/Compair";
 import QuickViewIco from "../icons/QuickViewIco";
 import Star from "../icons/Star";
 import ThinLove from "../icons/ThinLove";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import getCartItems from "../../../redux/action/cartActions";
 
 export default function ProductCardStyleOne({ datas, type }) {
   const available =
     (datas.cam_product_sale /
       (datas.cam_product_available + datas.cam_product_sale)) *
     100;
+    const dispatch=useDispatch();
+    const items = useSelector((state) => state._items.cartItems);
+  
+    const [cartItemsArray,setCartItemsArray]=useState([])
+    const addToCartItem = (datas) => {
+      let updatedCartItems;
+      if (items.length > 0) {
+        updatedCartItems = [...items, datas];
+      } else {
+        updatedCartItems = [datas];
+      }
+      setCartItemsArray(updatedCartItems);
+      dispatch(getCartItems(updatedCartItems));
+    };
   return (
     <div
       className="product-card-one w-full h-full bg-white relative group overflow-hidden"
@@ -67,7 +84,7 @@ export default function ProductCardStyleOne({ datas, type }) {
             type="button"
             className={type === 3 ? "blue-btn" : "yellow-btn"}
           >
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-3" onClick={()=>addToCartItem(datas)}>
               <span>
                 <svg
                   width="14"

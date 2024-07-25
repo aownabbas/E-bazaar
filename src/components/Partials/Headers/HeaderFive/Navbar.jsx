@@ -5,10 +5,6 @@ import Arrow from "../../../Helpers/icons/Arrow";
 export default function Navbar({ className }) {
   const [categoryToggle, setToggle] = useState(false);
   const [elementsSize, setSize] = useState("0px");
-  // const getItems = document.querySelectorAll(`.categories-list li`).length;
-  // if (categoryToggle && getItems > 0) {
-  //   setSize(`${40 * getItems}px`);
-  // }
   const handler = () => {
     setToggle(!categoryToggle);
   };
