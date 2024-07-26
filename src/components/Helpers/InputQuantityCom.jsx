@@ -1,13 +1,34 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import getCartItems from "../../redux/action/cartActions";
 
-export default function InputQuantityCom() {
-  const [quantity, setQuantity] = useState(1);
-  const increment = () => {
-    setQuantity((prev) => prev + 1);
+export default function InputQuantityCom({item}) {
+  const [quantity, setQuantity] = useState(item.quantity);
+  const { cartItems } = useSelector((state) => state._items);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setQuantity(item.quantity);
+  }, [item.quantity]);
+
+  const updateCartItems = (updatedItem) => {
+    const updatedCartItems = cartItems.map(cartItem =>
+      cartItem.id === updatedItem.id ? updatedItem : cartItem
+    );
+    dispatch(getCartItems(updatedCartItems));
   };
+
+  const increment = () => {
+    const newQuantity = quantity + 1;
+    setQuantity(newQuantity);
+    updateCartItems({ ...item, quantity: newQuantity });
+  };
+
   const decrement = () => {
     if (quantity > 1) {
-      setQuantity((prev) => prev - 1);
+      const newQuantity = quantity - 1;
+      setQuantity(newQuantity);
+      updateCartItems({ ...item, quantity: newQuantity });
     }
   };
   return (

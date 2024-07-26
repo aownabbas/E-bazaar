@@ -26,6 +26,7 @@ import Wishlist from "./components/Wishlist";
 import HomeThree from "./components/HomeThree";
 import HomeFour from "./components/HomeFour";
 import HomeFive from "./components/HomeFive";
+import ViewCart from "./components/ViewCart";
 
 const router = createBrowserRouter([
   { path: "/", element: <Home /> },
@@ -55,6 +56,7 @@ const router = createBrowserRouter([
   { path: "/privacy-policy", element: <PrivacyPolicy /> },
   { path: "/terms-condition", element: <TermsCondition /> },
   { path: "*", element: <FourZeroFour /> },
+  { path: "/view-cart", element: <ViewCart /> },
 ]);
 
 function Routers() {

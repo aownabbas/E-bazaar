@@ -15,17 +15,40 @@ export default function ProductCardStyleOne({ datas, type }) {
     const dispatch=useDispatch();
     const items = useSelector((state) => state._items.cartItems);
   
-    const [cartItemsArray,setCartItemsArray]=useState([])
-    const addToCartItem = (datas) => {
-      let updatedCartItems;
-      if (items.length > 0) {
-        updatedCartItems = [...items, datas];
-      } else {
-        updatedCartItems = [datas];
+  const addToCartItem = (datas) => {
+    // Find if the item already exists in the cart
+    const existingItemIndex = items.findIndex((item) => item.id === datas.id);
+  
+    let updatedCartItems;
+  
+    if (existingItemIndex !== -1) {
+      // Item exists, increase the quantity
+      updatedCartItems = items.map((item, index) =>
+        index === existingItemIndex
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      );
+    } else {
+      // Item does not exist, add it with a quantity of 1
+      updatedCartItems = [...items, { ...datas, quantity: 1 }];
+    }
+  
+    // Convert the updated items to an array
+    const itemQuantities = updatedCartItems.reduce((acc, item) => {
+      if (!acc[item.id]) {
+        acc[item.id] = item;
       }
-      setCartItemsArray(updatedCartItems);
-      dispatch(getCartItems(updatedCartItems));
-    };
+      return acc;
+    }, {});
+  
+    // Convert the aggregated items back to an array
+    const aggregatedItems = Object.values(itemQuantities);
+  
+    // Dispatch the updated cart items
+    dispatch(getCartItems(aggregatedItems));
+  };
+  
+
   return (
     <div
       className="product-card-one w-full h-full bg-white relative group overflow-hidden"

@@ -10,7 +10,6 @@ import { Link } from "react-router-dom";
 export default function Middlebar({ className, type }) {
 
   const items = useSelector((state) => state._items.cartItems);
-    console.log(items,"99999999");
 
   return (
     <div className={`w-full h-[86px] bg-white ${className}`}>

@@ -1,37 +1,16 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import getCartItems from "../../redux/action/cartActions";
+import { Link } from "react-router-dom";
 
 export default function Cart({ className, type }) {
 
   const dispatch = useDispatch();
   const items = useSelector((state) => state._items.cartItems);
-  const [sortedArray,setSortedArray]=useState([])
-  console.log(sortedArray,"hhhhhh");
   const removeSingleItem = (itemToRemove) => {
     const updatedItems = items.filter(item => item.id !== itemToRemove.id);
     dispatch(getCartItems(updatedItems));
   };
-
-  useEffect(()=>{
-
-    const itemQuantities = items.reduce((acc, item) => {
-      // If the item ID is not in the accumulator, add it
-      if (!acc[item.id]) {
-        acc[item.id] = { ...item, quantity: 1 };
-      } else {
-        // If the item ID is already in the accumulator, increment the quantity
-        acc[item.id].quantity += 1;
-      }
-      return acc;
-    }, {});
-    
-    // Step 2: Convert the aggregated items back to an array
-    const aggregatedItems = Object.values(itemQuantities);
-    setSortedArray(aggregatedItems)
-    
-
-  },[items])
   
 
   return (
@@ -43,11 +22,11 @@ export default function Cart({ className, type }) {
         }  ${className || ""}`}
       >
         <div className="w-full h-full">
-        {sortedArray && sortedArray.length > 0 ? (
+        {items && items.length > 0 ? (
           <div className="product-items h-[310px] overflow-y-scroll">
               <ul>
-                {sortedArray.map((item) => (
-                  <li className="w-full h-full flex">
+                {items.map((item,index) => (
+                  <li className="w-full h-full flex" key={index}>
                     <div className="flex space-x-[6px] justify-center items-center px-4 my-[20px]">
                       <div className="w-[65px] h-full">
                         <img
@@ -101,11 +80,11 @@ export default function Cart({ className, type }) {
               <span className="text-[15px] font-500 text-qred ">$365</span>
             </div>
             <div className="product-action-btn">
-              <a href="#">
+            <Link to="/view-cart">
                 <div className="gray-btn w-full h-[50px] mb-[10px] ">
                   <span>View Cart</span>
                 </div>
-              </a>
+              </Link>
               <a href="#">
                 <div className="w-full h-[50px]">
                   <div className={type === 3 ? "blue-btn" : "yellow-btn"}>
