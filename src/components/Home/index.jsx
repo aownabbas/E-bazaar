@@ -1,4 +1,5 @@
-// import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import datas from "../../data/products.json";
 import SectionStyleFour from "../Helpers/SectionStyleFour";
 import SectionStyleOne from "../Helpers/SectionStyleOne";
@@ -12,6 +13,10 @@ import BestSellers from "./BestSellers";
 import BrandSection from "./BrandSection";
 import CampaignCountDown from "./CampaignCountDown";
 import ProductsAds from "./ProductsAds";
+import { _getCategories } from "../../https/categories";
+import { errorRequestHandel } from "../../utils.js/helper";
+import _getCategoriesList from "../../redux/action/categories";
+import { useDispatch } from "react-redux";
 
 export default function Home() {
   const { products } = datas;
@@ -19,14 +24,27 @@ export default function Home() {
   products.forEach((product) => {
     brands.push(product.brand);
   });
-  // const [ads, setAds] = useState(false);
-  // const adsHandle = () => {
-  //   setAds(false);
-  // };
-  // useEffect(() => gs
-  // {
-  //   setAds(true);
-  // }, []);
+  const dispatch = useDispatch();
+  const fetchCategoriesList = async () => {
+      try {
+        // setLoading(true);
+        const response = await _getCategories();
+        if (response.status === 200) {
+          toast.success("categories fetched");
+          dispatch(_getCategoriesList(response.data));
+        }
+      } catch (error) {
+        errorRequestHandel({ error: error });
+      } finally {
+        // setLoading(false);
+      }
+    };
+
+  useEffect(() => {
+    fetchCategoriesList()
+  }, []);
+
+
   return (
     <>
       <Layout>

@@ -1,9 +1,11 @@
 import { useEffect, useState, useRef } from "react";
+import { useSelector } from "react-redux";
 
 export default function SearchBox({ className, type }) {
   const [categoryToggle, setToggle] = useState(false);
   const [elementsSize, setSize] = useState("0px");
   const [selectedCategory, setSelectedCategory] = useState("All Categories");
+  const {categoriesList} = useSelector((state) => state.categoriesList);
   const dropdownRef = useRef(null);
 
   const handler = () => {
@@ -101,9 +103,9 @@ export default function SearchBox({ className, type }) {
             ref={dropdownRef}
           >
             <ul className="categories-list w-[196px]">
-            {categoriesArray && categoriesArray?.map((item)=>(
+            {categoriesList && categoriesList.length > 0 && categoriesList?.map((item)=>(
               <li className="category-item border-t border-qgray-border">
-                <a href="#" onClick={() => handleCategoryClick(item.text)}>
+                <a href="#" onClick={() => handleCategoryClick(item.title)}>
                   <div
                     className={`flex justify-between items-center px-5 h-10 bg-white transition-all duration-300 ease-in-out cursor-pointer text-qblack ${
                       type === 3
@@ -112,7 +114,7 @@ export default function SearchBox({ className, type }) {
                     }`}
                   >
                     <div className="flex items-center space-x-6">
-                      <span className="text-xs font-400">{item.text}</span>
+                      <span className="text-xs font-400">{item.title}</span>
                     </div>
                   </div>
                 </a>

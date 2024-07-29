@@ -1,8 +1,5 @@
 import { Link } from "react-router-dom";
-import Slider from "react-slick";
 import { useEffect, useRef } from "react";
-import "slick-carousel/slick/slick-theme.css";
-import "slick-carousel/slick/slick.css";
 import SimpleSlider from "../Helpers/SliderCom";
 
 export default function Banner({ className }) {
