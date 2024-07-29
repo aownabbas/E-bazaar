@@ -12,6 +12,7 @@ export default {
         qgray: "#797979",
         qblacktext: "#1D1D1D",
         qgraytwo: "#8E8E8E",
+        'custom-orange': '#F7941D',
         "qgray-border": "#EFEFEF",
         "qblue-white": "#CBECFF",
         "qh2-green": "#2D6F6D",

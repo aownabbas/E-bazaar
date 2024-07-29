@@ -10,47 +10,23 @@ import { Link } from "react-router-dom";
 export default function Middlebar({ className, type }) {
 
   const items = useSelector((state) => state._items.cartItems);
-
   return (
     <div className={`w-full h-[86px] bg-white ${className}`}>
       <div className="container-x mx-auto h-full">
         <div className="relative h-full">
           <div className="flex justify-between items-center h-full">
             <div>
-              {type === 3 ? (
                 <Link to="/">
                   <img
                     width="152"
                     height="36"
-                    src={`${
-                      import.meta.env.VITE_PUBLIC_URL
-                    }/assets/images/logo-3.svg`}
+                    // src={`${
+                    //   import.meta.env.VITE_PUBLIC_URL
+                    // }/assets/images/logo-3.svg`}
+                    src="/assets/ebazaar-images/e-bazaar_logo_new.webp"
                     alt="logo"
                   />
                 </Link>
-              ) : type === 4 ? (
-                <Link to="/">
-                  <img
-                    width="152"
-                    height="36"
-                    src={`${
-                      import.meta.env.VITE_PUBLIC_URL
-                    }/assets/images/logo-4.svg`}
-                    alt="logo"
-                  />
-                </Link>
-              ) : (
-                <Link to="/">
-                  <img
-                    width="152"
-                    height="36"
-                    src={`${
-                      import.meta.env.VITE_PUBLIC_URL
-                    }/assets/images/logo.svg`}
-                    alt="logo"
-                  />
-                </Link>
-              )}
             </div>
             <div className="w-[517px] h-[44px]">
               <SearchBox type={type} className="search-com" />

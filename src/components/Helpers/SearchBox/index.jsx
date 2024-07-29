@@ -58,11 +58,11 @@ export default function SearchBox({ className, type }) {
           </form>
         </div>
         <div className="w-[1px] h-[22px] bg-qgray-border"></div>
-        <div className="flex-1 flex items-center w-[200px] px-4 relative">
+        <div className="flex-1 flex items-center w-[200px] px-4 relative cursor-pointer">
           <button
             type="button"
             onClick={handler}
-            className="w-full text-xs font-500 text-qgray flex justify-between items-center"
+            className="w-full text-xs font-500 text-qgray flex justify-between items-center cursor-pointer"
           >
             <span>{selectedCategory}</span>
             <span>

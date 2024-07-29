@@ -112,7 +112,7 @@ body {
 }
 
 .yellow-btn {
-  @apply w-full text-[13px] text-qblacktext font-semibold bg-qyellow flex justify-center items-center h-full;
+  @apply w-full text-[13px] text-qblacktext font-semibold bg-custom-orange flex justify-center items-center h-full;
   line-height: 0;
 }
 .blue-btn {
@@ -367,3 +367,4 @@ body {
 }
 
 /* TODO: ===============RESPONSIVE END */
+

@@ -16,9 +16,9 @@ export default function TopBar({ className }) {
               <ul className="flex space-x-6">
                 <li>
                   <Link to="/">
-                    <span className="text-xs leading-6 text-qblack font-500">
+                    {/* <span className="text-xs leading-6 text-qblack font-500">
                       Account
-                    </span>
+                    </span> */}
                   </Link>
                 </li>
                 <li>
@@ -37,7 +37,7 @@ export default function TopBar({ className }) {
                 </li>
               </ul>
             </div>
-            <div className="topbar-dropdowns sm:block hidden">
+            {/* <div className="topbar-dropdowns sm:block hidden">
               <div className="flex space-x-6">
                 <div className="country-select flex space-x-1 items-center">
                   <div>
@@ -68,7 +68,7 @@ export default function TopBar({ className }) {
                   <Arrow className="fill-current qblack" />
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

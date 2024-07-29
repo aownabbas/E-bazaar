@@ -1,58 +1,121 @@
 import { Link } from "react-router-dom";
+import Slider from "react-slick";
+import { useEffect, useRef } from "react";
+import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
+import SimpleSlider from "../Helpers/SliderCom";
 
 export default function Banner({ className }) {
+  const settings = {
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    centerMode: true,
+    infinite: true,
+    // centerPadding: "60px", 
+    dots: false,
+    responsive: [
+      {
+        breakpoint: 1026,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          centerMode: false,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          centerMode: false,
+        },
+      },
+
+      // You can unslick at a given breakpoint now by adding:
+      // settings: "unslick"
+      // instead of a settings object
+    ],
+  };
+  const slider = useRef(null);
+  const prev = () => {
+    slider.current.slickPrev();
+  };
+  const next = () => {
+    slider.current.slickNext();
+  };
   return (
     <>
       <div className={`w-full ${className || ""}`}>
         <div className="container-x mx-auto">
           <div className="main-wrapper w-full">
-            <div className="banner-card xl:flex xl:space-x-[30px] xl:h-[600px]  mb-[30px]">
-              <div data-aos="fade-right" className="xl:w-[740px] w-full h-full">
-                <Link to="/single-product">
-                  <picture>
-                    <source
-                      media="(min-width:1025px)"
-                      srcSet={`${
-                        import.meta.env.VITE_PUBLIC_URL
-                      }/assets/images/banner-1.png`}
-                    />
-                    <img
-                      src={`${
-                        import.meta.env.VITE_PUBLIC_URL
-                      }/assets/images/banner-1.2.png`}
-                      alt=""
-                      className="w-full max-w-full h-auto object-cover"
-                    />
-                  </picture>
-                </Link>
-              </div>
-              <div
-                data-aos="fade-left"
-                className="flex-1 flex xl:flex-col flex-row  xl:space-y-[30px] h-full"
-              >
-                <div className="w-full xl:h-1/2">
-                  <Link to="/single-product">
-                    <img
-                      src={`${
-                        import.meta.env.VITE_PUBLIC_URL
-                      }/assets/images/banner-2.png`}
-                      alt=""
-                      className="w-full h-full"
-                    />
-                  </Link>
-                </div>
-                <div className="w-full xl:h-1/2">
-                  <Link to="/single-product">
-                    <img
-                      src={`${
-                        import.meta.env.VITE_PUBLIC_URL
-                      }/assets/images/banner-3.png`}
-                      alt=""
-                      className="w-full h-full"
-                    />
-                  </Link>
+          <div className="w-full">
+            <SimpleSlider selector={slider} settings={settings}>
+              <div className="item h-[385px] bg-primarygray sm:px-14 sm:py-9 p-2 w-full">
+                <div className="flex flex-col justify-between h-[385px] bg-black">
+                  <img
+                    height="200px"
+                    width="100%"
+                    src="/assets/ebazaar-images/e-bazaar_logo_new.webp"
+                    alt="user"
+                  />
                 </div>
               </div>
+              <div className="item h-[385px] bg-primarygray sm:px-14 sm:py-9 p-2 w-full">
+                <div className="flex flex-col justify-between h-[385px] bg-black">
+                  <img
+                    height="200px"
+                    width="100%"
+                    src="/assets/images/flash-sale-ads.png"
+                    alt="user"
+                  />
+                </div>
+              </div>
+            </SimpleSlider>
+            <div className="slider-btns flex justify-center ">
+              <div className="flex space-x-5 item-center">
+                <button
+                  onClick={prev}
+                  type="button"
+                  className="prev-btn absolute left-[25rem] top-1/2 transform -translate-y-1/2 w-[48px] h-[48px] rounded-full flex justify-center items-center border border-qyellow text-qyellow focus:bg-qyellow focus:text-white"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15 19l-7-7 7-7"
+                    />
+                  </svg>
+                </button>
+                <button
+                  onClick={next}
+                  type="button"
+                  className="next-btn absolute right-[25rem] top-1/2 transform -translate-y-1/2 w-[48px] h-[48px] rounded-full flex justify-center items-center border border-qyellow text-qyellow focus:bg-qyellow focus:text-white"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6 transform rotate-180"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15 19l-7-7 7-7"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
             </div>
             <div
               data-aos="fade-up"

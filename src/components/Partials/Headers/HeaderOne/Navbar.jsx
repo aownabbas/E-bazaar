@@ -1,6 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState,useRef } from "react";
 import { Link } from "react-router-dom";
 import Arrow from "../../../Helpers/icons/Arrow";
+import { _getCategories } from "../../../../https/categories";
+import {toast} from "react-toastify";
+import { errorRequestHandel } from "../../../../utils.js/helper";
 
 export default function Navbar({ className, type }) {
   const [categoryToggle, setToggle] = useState(false);
@@ -8,8 +11,25 @@ export default function Navbar({ className, type }) {
   const [elementsWidthSize, setWidthSize] = useState("500px");
   const [openSubCategories, setOpenSubCategories]=useState(false)
   console.log(elementsSize, "count1111");
-  const handler = () => {
+  const toastId = useRef(null);
+  const handler = async () => {
     setToggle(!categoryToggle);
+
+    try {
+
+      // setLoading(true);
+      const response = await _getCategories();
+      if (response.status === 200) {
+        console.log(response);
+        toast.success("categories fetched");
+        // setIsUpdatePassword(false);
+        // dispatch(_toggleOverylay(false));
+      }
+    } catch (error) {
+      errorRequestHandel({ error: error });
+    } finally {
+      // setLoading(false);
+    }
   };
   useEffect(() => {
     if (categoryToggle) {
@@ -35,9 +55,26 @@ export default function Navbar({ className, type }) {
 
   const categoriesArray=[{text:"text 1"},{text:"text 2"},{text:"text 3"}]
 
+  const updatePassword = async () => {
+    try {
+
+      setLoading(true);
+      const response = await updatePasswordApi(data);
+      if (response.status === 200) {
+        toast.success("Password updated");
+        setIsUpdatePassword(false);
+        dispatch(_toggleOverylay(false));
+      }
+    } catch (error) {
+      errorRequestHandel({ error: error });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div
-      className={`nav-widget-wrapper w-full  h-[60px] relative z-30 ${type === 3 ? "bg-qh3-blue" : "bg-qyellow"
+      className={`nav-widget-wrapper w-full  h-[60px] relative z-30 ${type === 3 ? "bg-qh3-blue" : "bg-custom-orange"
         }  ${className || ""}`}
     >
       <div className="container-x mx-auto h-full">
@@ -757,39 +794,12 @@ export default function Navbar({ className, type }) {
                         <div
                           className={`flex justify-between items-center px-5 h-10 bg-white  transition-all duration-300 ease-in-out cursor-pointer text-qblack ${type === 3
                               ? "hover:bg-qh3-blue hover:text-white"
-                              : "hover:bg-qyellow"
+                              : "hover:bg-custom-orange"
                             }`}
                         >
-                          <div className="flex items-center space-x-6">
-                            <span className="text-xs font-400">
+                          <div className="flex items-center w-full space-x-6">
+                            <span className="text-xs text-center font-400">
                               {item.text}
-                            </span>
-                          </div>
-                          <div>
-                            <span>
-                              <svg
-                                className="fill-current"
-                                width="6"
-                                height="9"
-                                viewBox="0 0 6 9"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <rect
-                                  x="1.49805"
-                                  y="0.818359"
-                                  width="5.78538"
-                                  height="1.28564"
-                                  transform="rotate(45 1.49805 0.818359)"
-                                />
-                                <rect
-                                  x="5.58984"
-                                  y="4.90918"
-                                  width="5.78538"
-                                  height="1.28564"
-                                  transform="rotate(135 5.58984 4.90918)"
-                                />
-                              </svg>
                             </span>
                           </div>
                         </div>
@@ -802,7 +812,7 @@ export default function Navbar({ className, type }) {
               </div>
               <div className="nav">
                 <ul className="nav-wrapper flex xl:space-x-10 space-x-5">
-                  <li className="relative">
+                  {/* <li className="relative">
                     <span
                       className={`flex items-center text-sm font-600 cursor-pointer ${type === 3 ? "text-white" : "text-qblacktext"
                         }`}
@@ -889,8 +899,8 @@ export default function Navbar({ className, type }) {
                         </div>
                       </div>
                     </div>
-                  </li>
-                  <li>
+                  </li> */}
+                  {/* <li>
                     <span
                       className={`flex items-center text-sm font-600 cursor-pointer ${type === 3 ? "text-white" : "text-qblacktext"
                         }`}
@@ -1200,7 +1210,7 @@ export default function Navbar({ className, type }) {
                         </div>
                       </div>
                     </div>
-                  </li>
+                  </li> */}
                   <li>
                     <Link to="/about">
                       <span
