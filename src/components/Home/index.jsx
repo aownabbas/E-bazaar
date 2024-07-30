@@ -30,7 +30,7 @@ export default function Home() {
         // setLoading(true);
         const response = await _getCategories();
         if (response.status === 200) {
-          toast.success("categories fetched");
+          // toast.success("categories fetched");
           dispatch(_getCategoriesList(response.data));
         }
       } catch (error) {
