@@ -3,7 +3,7 @@ import Compair from "../icons/Compair";
 import QuickViewIco from "../icons/QuickViewIco";
 import Star from "../icons/Star";
 import ThinLove from "../icons/ThinLove";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import getCartItems from "../../../redux/action/cartActions";
 
@@ -13,7 +13,11 @@ export default function ProductCardStyleOne({ datas, type }) {
       (datas.cam_product_available + datas.cam_product_sale)) *
     100;
     const dispatch=useDispatch();
-    const items = useSelector((state) => state._items.cartItems);
+    // const items = useSelector((state) => state._items.cartItems);
+    const items = JSON.parse(localStorage.getItem('cartItems'));
+    useEffect(()=>{
+      console.log(items,"1234");
+        },[items])
   
   const addToCartItem = (datas) => {
     // Find if the item already exists in the cart
@@ -43,6 +47,7 @@ export default function ProductCardStyleOne({ datas, type }) {
   
     // Convert the aggregated items back to an array
     const aggregatedItems = Object.values(itemQuantities);
+    console.log(aggregatedItems,"11111");
     localStorage.setItem('cartItems', JSON.stringify(aggregatedItems));
     // Dispatch the updated cart items
     // dispatch(getCartItems(aggregatedItems));

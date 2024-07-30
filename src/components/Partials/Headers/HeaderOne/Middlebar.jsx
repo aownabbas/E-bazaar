@@ -6,10 +6,16 @@ import ThinLove from "../../../Helpers/icons/ThinLove";
 import ThinPeople from "../../../Helpers/icons/ThinPeople";
 import SearchBox from "../../../Helpers/SearchBox";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function Middlebar({ className, type }) {
 
   const items = JSON.parse(localStorage.getItem('cartItems'));
+  useEffect(()=>{
+console.log(items,"1234");
+  },[items])
+
+  console.log(items,"items");
   return (
     <div className={`w-full h-[86px] bg-white ${className}`}>
       <div className="container-x mx-auto h-full">
