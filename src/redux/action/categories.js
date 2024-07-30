@@ -1,4 +1,4 @@
-import { CATEGORIES } from "../types";
+import { CATEGORIES, BANNER_LIST } from "../types";
 
 export const _getItem = (data) => {
   return {
@@ -13,3 +13,12 @@ const _getCategoriesList = (params) => {
   };
 };
 export default _getCategoriesList;
+
+export const _getBannersList = (data) => {
+  return (dispatch) => {
+    dispatch({
+      type: BANNER_LIST,
+      payload: data,
+    });
+  };
+};

@@ -1,4 +1,3 @@
-import { useDispatch, useSelector } from "react-redux";
 import BreadcrumbCom from "../BreadcrumbCom";
 import EmptyWishlistError from "../EmptyWishlistError";
 import PageTitle from "../Helpers/PageTitle";
@@ -7,11 +6,11 @@ import ProductsTable from "../Wishlist/ProductsTable";
 import getCartItems from "../../redux/action/cartActions";
 
 export default function ViewCart({ wishlist = true }) {
-  const dispatch = useDispatch();
-  const { cartItems } = useSelector((state) => state._items);
+
+  const cartItems = JSON.parse(localStorage.getItem('cartItems'));
 
   const cleanCartItems=()=>{
-    dispatch(getCartItems([]));
+    localStorage.setItem('cartItems', JSON.stringify([]));
   }
 
   return (

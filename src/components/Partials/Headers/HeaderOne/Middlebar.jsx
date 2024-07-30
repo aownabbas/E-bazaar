@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 
 export default function Middlebar({ className, type }) {
 
-  const items = useSelector((state) => state._items.cartItems);
+  const items = JSON.parse(localStorage.getItem('cartItems'));
   return (
     <div className={`w-full h-[86px] bg-white ${className}`}>
       <div className="container-x mx-auto h-full">

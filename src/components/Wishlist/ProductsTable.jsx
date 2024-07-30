@@ -3,8 +3,8 @@ import InputQuantityCom from "../Helpers/InputQuantityCom";
 import getCartItems from "../../redux/action/cartActions";
 
 export default function ProductsTable({ className }) {
-  const dispatch = useDispatch();
-  const { cartItems } = useSelector((state) => state._items);
+  const cartItems = JSON.parse(localStorage.getItem('cartItems'));
+  console.log(cartItems,"555555");
 
   const YourComponent = ({ item }) => {
 
@@ -27,7 +27,8 @@ export default function ProductsTable({ className }) {
 
   const removeSingleItem = (itemToRemove) => {
     const updatedItems = cartItems.filter(item => item.id !== itemToRemove.id);
-    dispatch(getCartItems(updatedItems));
+    // dispatch(getCartItems(updatedItems));
+    localStorage.setItem('cartItems', JSON.stringify(updatedItems));
   };
 
   return (

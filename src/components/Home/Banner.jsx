@@ -1,12 +1,14 @@
-import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import SimpleSlider from "../Helpers/SliderCom";
 import { _getBannerList } from "../../https/categories";
-import { errorRequestHandel } from "../../utils.js/helper";
+import { useDispatch, useSelector } from "react-redux";
+import { _getBannersList } from "../../redux/action/categories";
 
 export default function Banner({ className }) {
-  const [bannerList, seBannerList] = useState({ banners: [], url: "" });
-  console.log(bannerList, "qqqqqqq");
+  
+  const dispatch=useDispatch();
+  const {_bannerList} = useSelector((state) => state._baners);
+
   useEffect(() => {
     fetchBannerList();
   }, []);
@@ -15,7 +17,7 @@ export default function Banner({ className }) {
     try {
       const response = await _getBannerList();
       if (response.status === 200) {
-        seBannerList({ url: response.data.url, banners: response.data.banners });
+        dispatch(_getBannersList(response.data))
       }
     } catch (error) {
       errorRequestHandle({ error: error });
@@ -26,7 +28,7 @@ export default function Banner({ className }) {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    centerMode: true,
+    centerMode: false,
     infinite: true,
     // centerPadding: "60px",
     dots: false,
@@ -65,71 +67,64 @@ export default function Banner({ className }) {
       <div className={`w-full ${className || ""}`}>
         <div className="container-x mx-auto">
           <div className="main-wrapper w-full">
-            <div className="w-full">
+            <div className="relative">
               <SimpleSlider selector={slider} settings={settings}>
-                {bannerList &&
-                  bannerList.banners.length > 0 &&
-                  bannerList?.banners?.map((item) => (
-                    <div className="item h-[485px] bg-primarygray sm:px-14 sm:py-9 p-2 w-full">
-                      <div className="flex flex-col justify-between h-[385px] bg-black">
-                        <img
-                          height="300px"
-                          width="100%"
-                          src={`${bannerList.url}${item.photo}`}
-                          alt="user"
-                        />
-                      </div>
+                {_bannerList && _bannerList.banners && _bannerList.banners.length > 0 && _bannerList.banners.map((item) => (
+                    <div className="h-[485px] w-full ">
+                      <img
+                        className="w-full h-full object-cover rounded"
+                        height="100%"
+                        width="100%"
+                        src={`${_bannerList.url}${item.photo}`}
+                        alt="user"
+                      />
                     </div>
                   ))}
               </SimpleSlider>
-              <div className="slider-btns flex justify-center mt-6">
-                <div className="flex space-x-5 item-center">
-                  <button
-                    onClick={prev}
-                    type="button"
-                    className="prev-btn absolute left-[25rem] top-1/2 transform -translate-y-1/2 w-[48px] h-[48px] rounded-full flex justify-center items-center border border-qyellow text-qyellow focus:bg-qyellow focus:text-white"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M15 19l-7-7 7-7"
-                      />
-                    </svg>
-                  </button>
-                  <button
-                    onClick={next}
-                    type="button"
-                    className="next-btn absolute right-[25rem] top-1/2 transform -translate-y-1/2 w-[48px] h-[48px] rounded-full flex justify-center items-center border border-qyellow text-qyellow focus:bg-qyellow focus:text-white"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6 transform rotate-180"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M15 19l-7-7 7-7"
-                      />
-                    </svg>
-                  </button>
-                </div>
-              </div>
+              <button
+                onClick={prev}
+                type="button"
+                className="prev-btn absolute left-[20px] top-1/2 transform -translate-y-1/2 w-[48px] h-[48px] rounded-full flex justify-center items-center border border-custom-orange text-qyellow focus:bg-custom-orange focus:text-white"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15 19l-7-7 7-7"
+                  />
+                </svg>
+              </button>
+              <button
+                onClick={next}
+                type="button"
+                className="next-btn absolute right-[20px] top-1/2 transform -translate-y-1/2 w-[48px] h-[48px] rounded-full flex justify-center items-center border border-custom-orange text-qyellow focus:bg-custom-orange focus:text-white"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6 transform rotate-180"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15 19l-7-7 7-7"
+                  />
+                </svg>
+              </button>
             </div>
             <div
               data-aos="fade-up"
-              className="best-services w-full bg-white flex flex-col space-y-10 lg:space-y-0 lg:flex-row lg:justify-between lg:items-center lg:h-[110px] px-10 lg:py-0 py-10"
+              className="best-services w-full bg-white flex flex-col space-y-10 lg:space-y-0 lg:flex-row lg:justify-between lg:items-center lg:h-[110px] px-10 lg:py-0 py-10 mt-10"
             >
               <div className="item">
                 <div className="flex space-x-5 items-center">

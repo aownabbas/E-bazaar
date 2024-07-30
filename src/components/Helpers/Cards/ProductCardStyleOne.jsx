@@ -43,9 +43,9 @@ export default function ProductCardStyleOne({ datas, type }) {
   
     // Convert the aggregated items back to an array
     const aggregatedItems = Object.values(itemQuantities);
-  
+    localStorage.setItem('cartItems', JSON.stringify(aggregatedItems));
     // Dispatch the updated cart items
-    dispatch(getCartItems(aggregatedItems));
+    // dispatch(getCartItems(aggregatedItems));
   };
   
 
@@ -102,12 +102,12 @@ export default function ProductCardStyleOne({ datas, type }) {
       </div>
       <div className="product-card-details px-[30px] pb-[30px] relative">
         {/* add to card button */}
-        <div className="absolute w-full h-10 px-[30px] left-0 top-40 group-hover:top-[85px] transition-all duration-300 ease-in-out">
+        <div className="absolute w-full h-10 px-[30px] left-0 top-40 group-hover:top-[85px] transition-all duration-300 ease-in-out" onClick={()=>addToCartItem(datas)}>
           <button
             type="button"
             className={type === 3 ? "blue-btn" : "yellow-btn"}
           >
-            <div className="flex items-center space-x-3" onClick={()=>addToCartItem(datas)}>
+            <div className="flex items-center space-x-3">
               <span>
                 <svg
                   width="14"
