@@ -6,6 +6,7 @@ import ThinLove from "../icons/ThinLove";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import getCartItems from "../../../redux/action/cartActions";
+import { toast } from "react-toastify";
 
 export default function ProductCardStyleOne({ datas, type }) {
   const available =
@@ -13,27 +14,21 @@ export default function ProductCardStyleOne({ datas, type }) {
       (datas.cam_product_available + datas.cam_product_sale)) *
     100;
     const dispatch=useDispatch();
-    // const items = useSelector((state) => state._items.cartItems);
-    const items = JSON.parse(localStorage.getItem('cartItems'));
-    useEffect(()=>{
-      console.log(items,"1234");
-        },[items])
-  
-  const addToCartItem = (datas) => {
-    // Find if the item already exists in the cart
-    const existingItemIndex = items.findIndex((item) => item.id === datas.id);
+    const items = useSelector((state) => state._items.cartItems);
+    const cartItems = JSON.parse(localStorage.getItem('cartItems'));
+    const addToCartItem = (datas) => {
+
+    const existingItemIndex = items?.findIndex((item) => item.id === datas.id);
   
     let updatedCartItems;
   
     if (existingItemIndex !== -1) {
-      // Item exists, increase the quantity
       updatedCartItems = items.map((item, index) =>
         index === existingItemIndex
           ? { ...item, quantity: item.quantity + 1 }
           : item
       );
     } else {
-      // Item does not exist, add it with a quantity of 1
       updatedCartItems = [...items, { ...datas, quantity: 1 }];
     }
   
@@ -44,14 +39,18 @@ export default function ProductCardStyleOne({ datas, type }) {
       }
       return acc;
     }, {});
-  
-    // Convert the aggregated items back to an array
+    
     const aggregatedItems = Object.values(itemQuantities);
-    console.log(aggregatedItems,"11111");
     localStorage.setItem('cartItems', JSON.stringify(aggregatedItems));
-    // Dispatch the updated cart items
-    // dispatch(getCartItems(aggregatedItems));
+    toast.success("Item Added Successfully")
+    dispatch(getCartItems(aggregatedItems));
   };
+
+  useEffect(() => {
+    if (Array.isArray(items) && items.length === 0 && Array.isArray(cartItems) && cartItems.length > 0) {
+      dispatch(getCartItems(cartItems));
+    }
+  }, [cartItems,dispatch, items]);
   
 
   return (

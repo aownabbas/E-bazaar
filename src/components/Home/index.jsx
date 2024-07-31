@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
 import datas from "../../data/products.json";
 import SectionStyleFour from "../Helpers/SectionStyleFour";
 import SectionStyleOne from "../Helpers/SectionStyleOne";
@@ -7,7 +6,6 @@ import SectionStyleThree from "../Helpers/SectionStyleThree";
 import SectionStyleTwo from "../Helpers/SectionStyleTwo";
 import ViewMoreTitle from "../Helpers/ViewMoreTitle";
 import Layout from "../Partials/Layout";
-// import Ads from "./Ads";
 import Banner from "./Banner";
 import BestSellers from "./BestSellers";
 import BrandSection from "./BrandSection";
@@ -27,10 +25,8 @@ export default function Home() {
   const dispatch = useDispatch();
   const fetchCategoriesList = async () => {
       try {
-        // setLoading(true);
         const response = await _getCategories();
         if (response.status === 200) {
-          // toast.success("categories fetched");
           dispatch(_getCategoriesList(response.data));
         }
       } catch (error) {

@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Cart from "../../../Cart";
 import Compair from "../../../Helpers/icons/Compair";
 import ThinBag from "../../../Helpers/icons/ThinBag";
@@ -7,15 +7,18 @@ import ThinPeople from "../../../Helpers/icons/ThinPeople";
 import SearchBox from "../../../Helpers/SearchBox";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
+import getCartItems from "../../../../redux/action/cartActions";
 
 export default function Middlebar({ className, type }) {
+  const items = useSelector((state) => state._items.cartItems);
+  const cartItems = JSON.parse(localStorage.getItem('cartItems'));
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (Array.isArray(items) && items.length === 0 && Array.isArray(cartItems) && cartItems.length > 0) {
+      dispatch(getCartItems(cartItems));
+    }
+  }, [cartItems,dispatch, items]);
 
-  const items = JSON.parse(localStorage.getItem('cartItems'));
-  useEffect(()=>{
-console.log(items,"1234");
-  },[items])
-
-  console.log(items,"items");
   return (
     <div className={`w-full h-[86px] bg-white ${className}`}>
       <div className="container-x mx-auto h-full">
@@ -73,7 +76,7 @@ console.log(items,"1234");
                       <ThinBag />
                     </span>
                   </Link>
-                  {items && items.length > 0 &&
+                  {Array.isArray(items) && items.length > 0 && 
                   <span
                     className={`w-[18px] h-[18px] rounded-full  absolute -top-2.5 -right-2.5 flex justify-center items-center text-[9px] ${
                       type === 3 ? "bg-qh3-blue text-white" : "bg-qyellow"

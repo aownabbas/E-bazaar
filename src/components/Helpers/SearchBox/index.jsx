@@ -103,15 +103,22 @@ export default function SearchBox({ className, type }) {
             ref={dropdownRef}
           >
             <ul className="categories-list w-[196px]">
+            <li className="category-item border-t border-qgray-border">
+                <a href="#" onClick={() => handleCategoryClick("All categories")}>
+                  <div
+                    className={`flex justify-between items-center px-5 h-10 bg-white transition-all duration-300 ease-in-out cursor-pointer text-qblack hover:bg-qyellow`}
+                  >
+                    <div className="flex items-center space-x-6">
+                      <span className="text-xs font-400">All categories</span>
+                    </div>
+                  </div>
+                </a>
+              </li>
             {categoriesList && categoriesList.length > 0 && categoriesList?.map((item)=>(
               <li className="category-item border-t border-qgray-border">
                 <a href="#" onClick={() => handleCategoryClick(item.title)}>
                   <div
-                    className={`flex justify-between items-center px-5 h-10 bg-white transition-all duration-300 ease-in-out cursor-pointer text-qblack ${
-                      type === 3
-                        ? "hover:bg-qh3-blue hover:text-white"
-                        : "hover:bg-qyellow"
-                    }`}
+                    className={`flex justify-between items-center px-5 h-10 bg-white transition-all duration-300 ease-in-out cursor-pointer text-qblack hover:bg-qyellow`}
                   >
                     <div className="flex items-center space-x-6">
                       <span className="text-xs font-400">{item.title}</span>

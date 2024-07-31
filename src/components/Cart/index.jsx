@@ -8,10 +8,9 @@ export default function Cart({ className, type }) {
   const dispatch = useDispatch();
   // const items = useSelector((state) => state._items.cartItems);
   const items = JSON.parse(localStorage.getItem('cartItems'));
-  console.log(items,"gggggg");
   const removeSingleItem = (itemToRemove) => {
     const updatedItems = items.filter(item => item.id !== itemToRemove.id);
-    // dispatch(getCartItems(updatedItems));
+    dispatch(getCartItems(updatedItems));
     localStorage.setItem('cartItems', JSON.stringify(updatedItems));
   };
   

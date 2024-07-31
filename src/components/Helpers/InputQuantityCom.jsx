@@ -4,18 +4,23 @@ import getCartItems from "../../redux/action/cartActions";
 
 export default function InputQuantityCom({item}) {
   const [quantity, setQuantity] = useState(item.quantity);
-  const { cartItems } = useSelector((state) => state._items);
+  const items= useSelector((state) => state._items.cartItems);
   const dispatch = useDispatch();
+  const cartItems = JSON.parse(localStorage.getItem('cartItems'));
 
   useEffect(() => {
     setQuantity(item.quantity);
+    if(items && items.length == 0){
+      dispatch(getCartItems(cartItems));
+    }
   }, [item.quantity]);
 
   const updateCartItems = (updatedItem) => {
-    const updatedCartItems = cartItems.map(cartItem =>
+    const updatedCartItems = items.map(cartItem =>
       cartItem.id === updatedItem.id ? updatedItem : cartItem
     );
     dispatch(getCartItems(updatedCartItems));
+    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
   };
 
   const increment = () => {

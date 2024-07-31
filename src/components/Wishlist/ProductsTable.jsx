@@ -1,11 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
 import InputQuantityCom from "../Helpers/InputQuantityCom";
 import getCartItems from "../../redux/action/cartActions";
+import { useEffect, useState } from "react";
 
 export default function ProductsTable({ className }) {
+  const dispatch=useDispatch();
   const cartItems = JSON.parse(localStorage.getItem('cartItems'));
+  const items = useSelector((state) => state._items.cartItems);
   console.log(cartItems,"555555");
 
+const [itemsListing,setItemListing]=useState(cartItems)
   const YourComponent = ({ item }) => {
 
     // Ensure price and quantity are numbers
@@ -26,10 +30,17 @@ export default function ProductsTable({ className }) {
   };
 
   const removeSingleItem = (itemToRemove) => {
-    const updatedItems = cartItems.filter(item => item.id !== itemToRemove.id);
-    // dispatch(getCartItems(updatedItems));
+    const updatedItems = items.filter(item => item.id !== itemToRemove.id);
+    dispatch(getCartItems(updatedItems));
+    // setItemListing(updatedItems)
     localStorage.setItem('cartItems', JSON.stringify(updatedItems));
   };
+
+  useEffect(()=>{
+    if(items && items.length == 0){
+    dispatch(getCartItems(cartItems));
+  }
+  },[cartItems])
 
   return (
     <div className={`w-full ${className || ""}`}>
@@ -47,7 +58,7 @@ export default function ProductsTable({ className }) {
               <td className="py-4 whitespace-nowrap text-right w-[114px] block"></td>
             </tr>
             {/* table heading end */}
-            {cartItems && cartItems.length > 0 && cartItems.map((item) => (
+            {items && items.length > 0 && items.map((item) => (
               <tr key={item.id} className="bg-white border-b hover:bg-gray-50">
                 <td className="pl-10 py-4">
                   <div className="flex space-x-6 items-center">

@@ -3,7 +3,6 @@ import ThinBag from "../../../Helpers/icons/ThinBag";
 import Middlebar from "./Middlebar";
 import Navbar from "./Navbar";
 import TopBar from "./TopBar";
-import { useSelector } from "react-redux";
 
 export default function HeaderOne({ className, drawerAction, type = 1 }) {
   return (
