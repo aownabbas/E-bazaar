@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 export default function BreadcrumbCom({
-  paths = [{ name: "home", path: "/" }],
+  paths = [{ name: "home", path: "/" },{ name: "All-Product", path: "/all-products" }],
 }) {
   return (
     <>

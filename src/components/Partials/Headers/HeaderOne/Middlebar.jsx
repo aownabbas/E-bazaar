@@ -71,7 +71,7 @@ export default function Middlebar({ className, type }) {
               </div>
               <div className="cart-wrapper group relative py-4">
                 <div className="cart relative cursor-pointer">
-                  <Link to="/cart">
+                  <Link to="/view-cart">
                     <span>
                       <ThinBag />
                     </span>

@@ -1,9 +1,10 @@
-import { CATEGORIES, BANNER_LIST } from "../types";
+import { CATEGORIES, BANNER_LIST, GET_SEARCHED_PRODUCTS } from "../types";
 
 const initialState = {
   loading: false,
   categoriesList: [],
   _bannerList: {},
+  searchedProducts:[],
   error: "",
 };
 
@@ -28,6 +29,20 @@ export const _bannerList = (state = initialState, action) => {
       return {
         loading: false,
         _bannerList: action.payload,
+        error: "",
+      };
+      break;
+    default:
+      return state;
+  }
+};
+
+export const getSearchedProducts = (state = initialState, action) => {
+  switch (action.type) {
+    case GET_SEARCHED_PRODUCTS:
+      return {
+        loading: false,
+        searchedProducts: action.payload,
         error: "",
       };
       break;

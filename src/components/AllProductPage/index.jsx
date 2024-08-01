@@ -5,6 +5,10 @@ import ProductCardStyleOne from "../Helpers/Cards/ProductCardStyleOne";
 import DataIteration from "../Helpers/DataIteration";
 import Layout from "../Partials/Layout";
 import ProductsFilter from "./ProductsFilter";
+import { useDispatch, useSelector } from "react-redux";
+import { getSearchedProducts } from "../../redux/action/categories";
+import { errorRequestHandel } from "../../utils.js/helper";
+import { _searchedCategories } from "../../https/categories";
 
 export default function AllProductPage() {
   const [filters, setFilter] = useState({
@@ -34,15 +38,43 @@ export default function AllProductPage() {
     sizeXXL: false,
     sizeFit: false,
   });
-
+  const dispatch = useDispatch();
+  const {searchedProducts} = useSelector((state) => state.searchedProducts);
+  console.log(searchedProducts,"searchedProducts");
+  const [filterProductsIds, setFilterProductsIds] = useState([]);
   const checkboxHandler = (e) => {
-    const { name } = e.target;
-    setFilter((prevState) => ({
-      ...prevState,
-      [name]: !prevState[name],
-    }));
+    const { id, checked } = e.target;
+    const numericId = Number(id); // Convert the id to a number
+
+    setFilterProductsIds((prevIds) => {
+      const updatedIds = checked
+        ? [...prevIds, numericId]
+        : prevIds.filter((itemId) => itemId !== numericId);
+
+      // Send the updated array to your payload function here
+      sendPayload(updatedIds);
+      return updatedIds;
+    });
+  };
+
+  const sendPayload =async (updatedIds) => {
+    const payload={
+      search: '',
+      category_id: updatedIds
+    }
+    try {
+      const response = await _searchedCategories(payload);
+      if (response.status === 200) {
+        dispatch(getSearchedProducts(response.data));
+      }
+    } catch (error) {
+      errorRequestHandel({ error: error });
+    } finally {
+      // setLoading(false);
+    }
   };
   const [volume, setVolume] = useState({ min: 200, max: 500 });
+  const [search, setSearch] = useState(true);
 
   const [storage, setStorage] = useState(null);
   const filterStorage = (value) => {
@@ -50,7 +82,8 @@ export default function AllProductPage() {
   };
   const [filterToggle, setToggle] = useState(false);
 
-  const { products } = productDatas;
+  // const { products } = productDatas;
+  const { products,categories } = searchedProducts;
 
   return (
     <>
@@ -70,6 +103,7 @@ export default function AllProductPage() {
                   storage={storage}
                   filterstorage={filterStorage}
                   className="mb-[30px]"
+                  categoriesList={categories}
                 />
                 {/* ads */}
                 <div className="w-full hidden lg:block h-[295px]">
@@ -135,7 +169,7 @@ export default function AllProductPage() {
                   <DataIteration datas={products} startLength={0} endLength={6}>
                     {({ datas }) => (
                       <div data-aos="fade-up" key={datas.id}>
-                        <ProductCardStyleOne datas={datas} />
+                        <ProductCardStyleOne datas={datas} search={search}/>
                       </div>
                     )}
                   </DataIteration>

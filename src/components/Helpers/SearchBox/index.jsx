@@ -1,19 +1,29 @@
 import { useEffect, useState, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { _searchedCategories } from "../../../https/categories";
+import { getSearchedProducts } from "../../../redux/action/categories";
+import { errorRequestHandel } from "../../../utils.js/helper";
 
 export default function SearchBox({ className, type }) {
   const [categoryToggle, setToggle] = useState(false);
   const [elementsSize, setSize] = useState("0px");
-  const [selectedCategory, setSelectedCategory] = useState("All Categories");
-  const {categoriesList} = useSelector((state) => state.categoriesList);
+  const [selectedCategory, setSelectedCategory] = useState({
+    title: "All Categories",
+    id: 0,
+  });
+  const [searchString, setSearchString] = useState();
+  const { categoriesList } = useSelector((state) => state.categoriesList);
   const dropdownRef = useRef(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handler = () => {
     setToggle(!categoryToggle);
   };
 
   const handleCategoryClick = (category) => {
-    setSelectedCategory(category);
+    setSelectedCategory({ title: category.title, id: category.id });
     setToggle(false);
   };
 
@@ -41,7 +51,23 @@ export default function SearchBox({ className, type }) {
     };
   }, []);
 
-  const categoriesArray=[{text:"category 1"},{text:"category 2"},{text:"category 3"}]
+  const searchSelectedCategory = async () => {
+    const payload={
+      search: searchString,
+      category_id: selectedCategory.id
+    }
+    try {
+      const response = await _searchedCategories(payload);
+      if (response.status === 200) {
+        dispatch(getSearchedProducts(response.data));
+        navigate("/all-products");
+      }
+    } catch (error) {
+      errorRequestHandel({ error: error });
+    } finally {
+      // setLoading(false);
+    }
+  };
 
   return (
     <>
@@ -56,6 +82,8 @@ export default function SearchBox({ className, type }) {
               type="text"
               className="search-input"
               placeholder="Search Product..."
+              value={searchString}
+              onChange={(e) => setSearchString(e.target.value)}
             />
           </form>
         </div>
@@ -66,7 +94,7 @@ export default function SearchBox({ className, type }) {
             onClick={handler}
             className="w-full text-xs font-500 text-qgray flex justify-between items-center cursor-pointer"
           >
-            <span>{selectedCategory}</span>
+            <span>{selectedCategory.title}</span>
             <span>
               <svg
                 width="10"
@@ -95,7 +123,10 @@ export default function SearchBox({ className, type }) {
             </span>
           </button>
           {categoryToggle && (
-            <div className="fixed top-0 left-0 w-full h-full" onClick={handler}></div>
+            <div
+              className="fixed top-0 left-0 w-full h-full"
+              onClick={handler}
+            ></div>
           )}
           <div
             className="category-dropdown absolute top-[30px] overflow-hidden z-40"
@@ -103,34 +134,41 @@ export default function SearchBox({ className, type }) {
             ref={dropdownRef}
           >
             <ul className="categories-list w-[196px]">
-            <li className="category-item border-t border-qgray-border">
-                <a href="#" onClick={() => handleCategoryClick("All categories")}>
-                  <div
-                    className={`flex justify-between items-center px-5 h-10 bg-white transition-all duration-300 ease-in-out cursor-pointer text-qblack hover:bg-qyellow`}
-                  >
-                    <div className="flex items-center space-x-6">
-                      <span className="text-xs font-400">All categories</span>
-                    </div>
+              <li
+                className="category-item border-t border-qgray-border"
+                onClick={() =>
+                  handleCategoryClick({ title: "All Categories", id: 0 })
+                }
+              >
+                <div
+                  className={`flex justify-between items-center px-5 h-10 bg-white transition-all duration-300 ease-in-out cursor-pointer text-qblack hover:bg-qyellow`}
+                >
+                  <div className="flex items-center space-x-6">
+                    <span className="text-xs font-400">All</span>
                   </div>
-                </a>
+                </div>
               </li>
-            {categoriesList && categoriesList.length > 0 && categoriesList?.map((item)=>(
-              <li className="category-item border-t border-qgray-border">
-                <a href="#" onClick={() => handleCategoryClick(item.title)}>
-                  <div
-                    className={`flex justify-between items-center px-5 h-10 bg-white transition-all duration-300 ease-in-out cursor-pointer text-qblack hover:bg-qyellow`}
+              {categoriesList &&
+                categoriesList.length > 0 &&
+                categoriesList?.map((item) => (
+                  <li
+                    className="category-item border-t border-qgray-border"
+                    onClick={() => handleCategoryClick(item)}
                   >
-                    <div className="flex items-center space-x-6">
-                      <span className="text-xs font-400">{item.title}</span>
+                    <div
+                      className={`flex justify-between items-center px-5 h-10 bg-white transition-all duration-300 ease-in-out cursor-pointer text-qblack hover:bg-qyellow`}
+                    >
+                      <div className="flex items-center space-x-6">
+                        <span className="text-xs font-400">{item.title}</span>
+                      </div>
                     </div>
-                  </div>
-                </a>
-              </li>
-            ))}
+                  </li>
+                ))}
             </ul>
           </div>
         </div>
         <button
+          onClick={searchSelectedCategory}
           className={`w-[93px] h-full text-sm font-600 ${
             type === 3 ? "bg-qh3-blue text-white" : "search-btn"
           }`}

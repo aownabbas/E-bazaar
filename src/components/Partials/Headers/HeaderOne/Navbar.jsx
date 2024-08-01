@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import Arrow from "../../../Helpers/icons/Arrow";
 import {
   _getCategories,
-  _getSubCategories,
 } from "../../../../https/categories";
 import { useSelector } from "react-redux";
 

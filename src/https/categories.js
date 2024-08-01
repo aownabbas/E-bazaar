@@ -5,10 +5,10 @@ export const _getCategories = async (payload) => {
     return await client.get(endPoints.CATEGORIES);
 };
 
-export const _getSubCategories = async (payload) => {
-  return await client.get(`${endPoints.SUB_CATEGORIES}/${payload}`);
-};
-
 export const _getBannerList = async (payload) => {
   return await client.get(endPoints.BANNER_LIST);
+};
+
+export const _searchedCategories = async (payload) => {
+  return await client.post(`${endPoints.SEARCHED_PRODUCTS}`,payload);
 };

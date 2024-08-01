@@ -8,7 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import getCartItems from "../../../redux/action/cartActions";
 import { toast } from "react-toastify";
 
-export default function ProductCardStyleOne({ datas, type }) {
+
+export default function ProductCardStyleOne({ datas, type, search }) {
   const available =
     (datas.cam_product_sale /
       (datas.cam_product_available + datas.cam_product_sale)) *
@@ -51,7 +52,6 @@ export default function ProductCardStyleOne({ datas, type }) {
       dispatch(getCartItems(cartItems));
     }
   }, [cartItems,dispatch, items]);
-  
 
   return (
     <div
@@ -61,9 +61,11 @@ export default function ProductCardStyleOne({ datas, type }) {
       <div
         className="product-card-img w-full h-[300px]"
         style={{
-          background: `url(${import.meta.env.VITE_PUBLIC_URL}/assets/images/${
-            datas.image
-          }) no-repeat center`,
+          background: search ?  `url(${import.meta.env.VITE_PRODUCTS_IMAGES_URL}${
+            datas.photo
+          }) no-repeat center`: `url(${import.meta.env.VITE_PUBLIC_URL}/assets/images/${
+             datas.image
+           }) no-repeat center`,
         }}
       >
         {/* product available progress */}
@@ -129,8 +131,8 @@ export default function ProductCardStyleOne({ datas, type }) {
           </button>
         </div>
         <div className="reviews flex space-x-[1px] mb-3">
-          {Array.from(Array(datas.review), () => (
-            <span key={datas.review + Math.random()}>
+          {Array.from(Array(datas.get_review), () => (
+            <span key={datas.get_review + Math.random()}>
               <Star />
             </span>
           ))}
