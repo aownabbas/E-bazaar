@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import productDatas from "../../data/products.json";
 import BreadcrumbCom from "../BreadcrumbCom";
 import ProductCardStyleOne from "../Helpers/Cards/ProductCardStyleOne";
@@ -39,9 +39,14 @@ export default function AllProductPage() {
     sizeFit: false,
   });
   const dispatch = useDispatch();
-  const {searchedProducts} = useSelector((state) => state.searchedProducts);
-  console.log(searchedProducts,"searchedProducts");
+  const { searchedProducts } = useSelector((state) => state.searchedProducts);
+  console.log(searchedProducts, "searchedProducts");
   const [filterProductsIds, setFilterProductsIds] = useState([]);
+  const [categoryToggle1, setToggle1] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("Price");
+  const [elementsSize, setSize] = useState("0px");
+  const dropdownRef = useRef(null);
+
   const checkboxHandler = (e) => {
     const { id, checked } = e.target;
     const numericId = Number(id); // Convert the id to a number
@@ -57,8 +62,8 @@ export default function AllProductPage() {
     });
   };
 
-  const sendPayload =async (updatedIds) => {
-    const payload={
+  const sendPayload = async (updatedIds) => {
+    const payload = {
       search: '',
       category_id: updatedIds
     }
@@ -83,8 +88,54 @@ export default function AllProductPage() {
   const [filterToggle, setToggle] = useState(false);
 
   // const { products } = productDatas;
-  const { products,categories } = searchedProducts;
+  const { products, categories } = searchedProducts;
 
+// toggle products by ascending or descending code 
+  const handler = () => {
+    setToggle1(!categoryToggle1);
+  };
+
+  useEffect(() => {
+
+    if (categoryToggle1) {
+      const getItems = document.querySelectorAll(`.categories-list li`).length;
+      if (getItems > 0) {
+        setSize(`${42 * getItems}px`);
+      }
+    } else {
+      setSize(`0px`);
+    }
+  }, [categoryToggle1]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setToggle1(false);
+        // alert("hhh")
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const handleProductSort = (order) => {
+    setSelectedCategory(order)
+    setToggle1(false)
+    const sortedProducts = products?.sort((a, b) => {
+        if (order === 'ascending') {
+            return a.price - b.price;
+        } else if (order === 'descending') {
+            return b.price - a.price;
+        }
+    });
+
+    dispatch(getSearchedProducts({ categories: categories, products: sortedProducts}));
+};
+
+// console.log(handleProductSort((products, 'ascending')));
   return (
     <>
       <Layout>
@@ -108,9 +159,8 @@ export default function AllProductPage() {
                 {/* ads */}
                 <div className="w-full hidden lg:block h-[295px]">
                   <img
-                    src={`${
-                      import.meta.env.VITE_PUBLIC_URL
-                    }/assets/images/ads-5.png`}
+                    src={`${import.meta.env.VITE_PUBLIC_URL
+                      }/assets/images/ads-5.png`}
                     alt=""
                     className="w-full h-full object-contain"
                   />
@@ -125,11 +175,11 @@ export default function AllProductPage() {
                       results
                     </p>
                   </div>
-                  <div className="flex space-x-3 items-center">
+                  <div className="flex space-x-3 items-center relative cursor-pointer">
                     <span className="font-400 text-[13px]">Sort by:</span>
-                    <div className="flex space-x-3 items-center border-b border-b-qgray">
+                    <div className="flex space-x-3 items-center border-b border-b-qgray" onClick={handler}>
                       <span className="font-400 text-[13px] text-qgray">
-                        Default
+                        {selectedCategory}
                       </span>
                       <span>
                         <svg
@@ -142,6 +192,48 @@ export default function AllProductPage() {
                           <path d="M1 1L5 5L9 1" stroke="#9A9A9A" />
                         </svg>
                       </span>
+                    </div>
+                    {categoryToggle1 && (
+                      <div
+                        className="fixed top-0 left-0 w-full h-full"
+                        onClick={handler}
+                      ></div>
+                    )}
+                    <div
+                      className="category-dropdown absolute top-[20px] left-[40px]  overflow-hidden z-40"
+                      style={{ height: `${elementsSize} ` }}
+                      ref={dropdownRef}
+                    >
+                      <ul className="categories-list w-[160px]">
+                        <li
+                          className="category-item border-t border-qgray-border"
+                          onClick={() =>
+                            handleProductSort("ascending")
+                          }
+                        >
+                          <div
+                            className={`flex justify-between items-center px-5 h-10 bg-white transition-all duration-300 ease-in-out cursor-pointer text-qblack hover:bg-qyellow`}
+                          >
+                            <div className="flex items-center space-x-6">
+                              <span className="text-xs font-400">Ascending by Price</span>
+                            </div>
+                          </div>
+                        </li>
+                        <li
+                          className="category-item border-t border-qgray-border"
+                          onClick={() =>
+                            handleProductSort("descending")
+                          }
+                        >
+                          <div
+                            className={`flex justify-between items-center px-5 h-10 bg-white transition-all duration-300 ease-in-out cursor-pointer text-qblack hover:bg-qyellow`}
+                          >
+                            <div className="flex items-center space-x-6">
+                              <span className="text-xs font-400">Descending by Price</span>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
                     </div>
                   </div>
                   <button
@@ -169,7 +261,7 @@ export default function AllProductPage() {
                   <DataIteration datas={products} startLength={0} endLength={6}>
                     {({ datas }) => (
                       <div data-aos="fade-up" key={datas.id}>
-                        <ProductCardStyleOne datas={datas} search={search}/>
+                        <ProductCardStyleOne datas={datas} search={search} />
                       </div>
                     )}
                   </DataIteration>
@@ -177,9 +269,8 @@ export default function AllProductPage() {
 
                 <div className="w-full h-[164px] overflow-hidden mb-[40px]">
                   <img
-                    src={`${
-                      import.meta.env.VITE_PUBLIC_URL
-                    }/assets/images/ads-6.png`}
+                    src={`${import.meta.env.VITE_PUBLIC_URL
+                      }/assets/images/ads-6.png`}
                     alt=""
                     className="w-full h-full object-contain"
                   />
