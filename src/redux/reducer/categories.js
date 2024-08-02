@@ -1,10 +1,11 @@
-import { CATEGORIES, BANNER_LIST, GET_SEARCHED_PRODUCTS } from "../types";
+import { CATEGORIES, BANNER_LIST, GET_SEARCHED_PRODUCTS, GET_SEARCH_PARAMS } from "../types";
 
 const initialState = {
   loading: false,
   categoriesList: [],
   _bannerList: {},
   searchedProducts:[],
+  searchParams:{},
   error: "",
 };
 
@@ -43,6 +44,20 @@ export const getSearchedProducts = (state = initialState, action) => {
       return {
         loading: false,
         searchedProducts: action.payload,
+        error: "",
+      };
+      break;
+    default:
+      return state;
+  }
+};
+
+export const getSearchParams = (state = initialState, action) => {
+  switch (action.type) {
+    case GET_SEARCH_PARAMS:
+      return {
+        loading: false,
+        searchParams: action.payload,
         error: "",
       };
       break;

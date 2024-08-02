@@ -1,22 +1,30 @@
 import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { _searchedCategories } from "../../../https/categories";
-import { getSearchedProducts } from "../../../redux/action/categories";
+import { getSearchedProducts, getSearchParameters } from "../../../redux/action/categories";
 import { errorRequestHandel } from "../../../utils.js/helper";
 
 export default function SearchBox({ className, type }) {
   const [categoryToggle, setToggle] = useState(false);
   const [elementsSize, setSize] = useState("0px");
+  const query = new URLSearchParams(useLocation().search);
+  const id = query.get('id');
+  const string = query.get('string');
+  const title = query.get('title');
   const [selectedCategory, setSelectedCategory] = useState({
-    title: "All Categories",
-    id: 0,
+    title: title ? title : "All Categories",
+    id: id ? id : 0,
   });
-  const [searchString, setSearchString] = useState();
+  const [searchString, setSearchString] = useState(string ? string :"");
   const { categoriesList } = useSelector((state) => state.categoriesList);
+  const searchParams  = useSelector((state) => state.searchParams.searchParams);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  
+  console.log(searchParams,"gggggggg");
+  
 
   const handler = () => {
     setToggle(!categoryToggle);
@@ -51,16 +59,18 @@ export default function SearchBox({ className, type }) {
     };
   }, []);
 
+  
   const searchSelectedCategory = async () => {
     const payload={
       search: searchString,
       category_id: selectedCategory.id
     }
+    dispatch(getSearchParameters(payload))
     try {
       const response = await _searchedCategories(payload);
       if (response.status === 200) {
         dispatch(getSearchedProducts(response.data));
-        navigate("/all-products");
+        navigate(`/all-products?id=${selectedCategory.id}&title=${selectedCategory.title}&string=${searchString}`);
       }
     } catch (error) {
       errorRequestHandel({ error: error });
@@ -83,7 +93,13 @@ export default function SearchBox({ className, type }) {
               className="search-input"
               placeholder="Search Product..."
               value={searchString}
-              onChange={(e) => setSearchString(e.target.value)}
+              onChange={(e) => {setSearchString(e.target.value)
+                const payload={
+                  search: searchString,
+                  category_id: selectedCategory.id
+                }
+                dispatch(getSearchParameters(payload))
+              }}
             />
           </form>
         </div>

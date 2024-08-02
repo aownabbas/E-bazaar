@@ -1,4 +1,4 @@
-import { CATEGORIES, BANNER_LIST,GET_SEARCHED_PRODUCTS } from "../types";
+import { CATEGORIES, BANNER_LIST,GET_SEARCHED_PRODUCTS, GET_SEARCH_PARAMS } from "../types";
 
 export const _getItem = (data) => {
   return {
@@ -27,6 +27,15 @@ export const getSearchedProducts = (data) => {
   return (dispatch) => {
     dispatch({
       type: GET_SEARCHED_PRODUCTS,
+      payload: data,
+    });
+  };
+};
+
+export const getSearchParameters = (data) => {
+  return (dispatch) => {
+    dispatch({
+      type: GET_SEARCH_PARAMS,
       payload: data,
     });
   };

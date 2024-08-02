@@ -91,10 +91,10 @@ export default function ProductsFilter({
             />
           </div>
           <p className="text-xs text-qblack font-400">
-            Price: ${volume.min} - ${volume.max}
+            Price: Rs{volume.min} - Rs{volume.max}
           </p>
         </div>
-        <div className="filter-subject-item pb-10 border-b border-qgray-border mt-10">
+        {/* <div className="filter-subject-item pb-10 border-b border-qgray-border mt-10">
           <div className="subject-title mb-[30px]">
             <h1 className="text-black text-base font-500">Brands</h1>
           </div>
@@ -448,7 +448,7 @@ export default function ProductsFilter({
               clipRule="evenodd"
             />
           </svg>
-        </button>
+        </button> */}
       </div>
     </>
   );

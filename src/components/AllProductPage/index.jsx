@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getSearchedProducts } from "../../redux/action/categories";
 import { errorRequestHandel } from "../../utils.js/helper";
 import { _searchedCategories } from "../../https/categories";
+import { useLocation, useParams } from "react-router-dom";
 
 export default function AllProductPage() {
   const [filters, setFilter] = useState({
@@ -40,12 +41,17 @@ export default function AllProductPage() {
   });
   const dispatch = useDispatch();
   const { searchedProducts } = useSelector((state) => state.searchedProducts);
+  const searchParams  = useSelector((state) => state.searchParams.searchParams);
   console.log(searchedProducts, "searchedProducts");
   const [filterProductsIds, setFilterProductsIds] = useState([]);
   const [categoryToggle1, setToggle1] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("Price");
   const [elementsSize, setSize] = useState("0px");
   const dropdownRef = useRef(null);
+  const query = new URLSearchParams(useLocation().search);
+  const id = query.get('id');
+  const string = query.get('string');
+  
 
   const checkboxHandler = (e) => {
     const { id, checked } = e.target;
@@ -62,9 +68,10 @@ export default function AllProductPage() {
     });
   };
 
+  // const {search }=searchParams;
   const sendPayload = async (updatedIds) => {
     const payload = {
-      search: '',
+      search: searchParams?.search,
       category_id: updatedIds
     }
     try {
@@ -78,7 +85,7 @@ export default function AllProductPage() {
       // setLoading(false);
     }
   };
-  const [volume, setVolume] = useState({ min: 200, max: 500 });
+  const [volume, setVolume] = useState({ min: 0, max: 1000 });
   const [search, setSearch] = useState(true);
 
   const [storage, setStorage] = useState(null);
@@ -108,6 +115,8 @@ export default function AllProductPage() {
   }, [categoryToggle1]);
 
   useEffect(() => {
+    searchSelectedCategory();
+
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setToggle1(false);
@@ -120,6 +129,23 @@ export default function AllProductPage() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const searchSelectedCategory = async () => {
+    const payload={
+      search: string,
+      category_id: id
+    }
+    try {
+      const response = await _searchedCategories(payload);
+      if (response.status === 200) {
+        dispatch(getSearchedProducts(response.data));
+      }
+    } catch (error) {
+      errorRequestHandel({ error: error });
+    } finally {
+      // setLoading(false);
+    }
+  };
 
   const handleProductSort = (order) => {
     setSelectedCategory(order)
@@ -134,6 +160,13 @@ export default function AllProductPage() {
 
     dispatch(getSearchedProducts({ categories: categories, products: sortedProducts}));
 };
+
+const pricRangeHandler=(value)=>{
+  setVolume({min:value[0],max:value[1]})
+  // const { min, max }=volume;
+  const filteredItems = products.filter(item => item.price >= volume.min && item.price <= volume.max);
+  dispatch(getSearchedProducts({ categories: categories, products: filteredItems}))
+}
 
 // console.log(handleProductSort((products, 'ascending')));
   return (
@@ -150,21 +183,21 @@ export default function AllProductPage() {
                   filters={filters}
                   checkboxHandler={checkboxHandler}
                   volume={volume}
-                  volumeHandler={(value) => setVolume(value)}
+                  volumeHandler={(value) => pricRangeHandler(value)}
                   storage={storage}
                   filterstorage={filterStorage}
                   className="mb-[30px]"
                   categoriesList={categories}
                 />
                 {/* ads */}
-                <div className="w-full hidden lg:block h-[295px]">
+                {/* <div className="w-full hidden lg:block h-[295px]">
                   <img
                     src={`${import.meta.env.VITE_PUBLIC_URL
                       }/assets/images/ads-5.png`}
                     alt=""
                     className="w-full h-full object-contain"
                   />
-                </div>
+                </div> */}
               </div>
 
               <div className="flex-1">
@@ -258,7 +291,7 @@ export default function AllProductPage() {
                   </button>
                 </div>
                 <div className="grid xl:grid-cols-3 sm:grid-cols-2 grid-cols-1  xl:gap-[30px] gap-5 mb-[40px]">
-                  <DataIteration datas={products} startLength={0} endLength={6}>
+                  <DataIteration datas={products} startLength={0} endLength={products?.length}>
                     {({ datas }) => (
                       <div data-aos="fade-up" key={datas.id}>
                         <ProductCardStyleOne datas={datas} search={search} />
@@ -267,14 +300,14 @@ export default function AllProductPage() {
                   </DataIteration>
                 </div>
 
-                <div className="w-full h-[164px] overflow-hidden mb-[40px]">
+                {/* <div className="w-full h-[164px] overflow-hidden mb-[40px]">
                   <img
                     src={`${import.meta.env.VITE_PUBLIC_URL
                       }/assets/images/ads-6.png`}
                     alt=""
                     className="w-full h-full object-contain"
                   />
-                </div>
+                </div> */}
                 <div className="grid xl:grid-cols-3 sm:grid-cols-2 grid-cols-1 xl:gap-[30px] gap-5 mb-[40px]">
                   <DataIteration
                     datas={products}

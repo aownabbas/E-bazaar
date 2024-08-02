@@ -1,5 +1,7 @@
 function DataIteration(props) {
   const { datas = [], startLength, endLength, children } = props;
+  console.log(datas,"124455");
+  
   return (
     <>
       {datas &&

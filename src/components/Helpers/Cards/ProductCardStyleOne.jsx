@@ -17,6 +17,14 @@ export default function ProductCardStyleOne({ datas, type, search }) {
     const dispatch=useDispatch();
     const items = useSelector((state) => state._items.cartItems);
     const cartItems = JSON.parse(localStorage.getItem('cartItems'));
+    console.log(datas,"data");
+    const {product_stock}=datas;
+    const minPrice = product_stock?.reduce((min, product) => {
+      return product.price_per_unit < min ? product.price_per_unit : min;
+    }, product_stock[0].price_per_unit);
+    
+    console.log(minPrice,"gggggg");
+    
     const addToCartItem = (datas) => {
 
     const existingItemIndex = items?.findIndex((item) => item.id === datas.id);
@@ -58,14 +66,16 @@ export default function ProductCardStyleOne({ datas, type, search }) {
       className="product-card-one w-full h-full bg-white relative group overflow-hidden"
       style={{ boxShadow: "0px 15px 64px 0px rgba(0, 0, 0, 0.05)" }}
     >
+      <div className={search ? ` px-6 py-6`:""}>
       <div
-        className="product-card-img w-full h-[300px]"
+        className={search ? `product-card-img w-full h-[250px]` : `product-card-img w-full h-[300px]`}
         style={{
           background: search ?  `url(${import.meta.env.VITE_PRODUCTS_IMAGES_URL}${
             datas.photo
           }) no-repeat center`: `url(${import.meta.env.VITE_PUBLIC_URL}/assets/images/${
              datas.image
            }) no-repeat center`,
+           backgroundSize: search ? "cover" : "", 
         }}
       >
         {/* product available progress */}
@@ -106,6 +116,7 @@ export default function ProductCardStyleOne({ datas, type, search }) {
           </div>
         )}
       </div>
+      </div>
       <div className="product-card-details px-[30px] pb-[30px] relative">
         {/* add to card button */}
         <div className="absolute w-full h-10 px-[30px] left-0 top-40 group-hover:top-[85px] transition-all duration-300 ease-in-out" onClick={()=>addToCartItem(datas)}>
@@ -144,15 +155,16 @@ export default function ProductCardStyleOne({ datas, type, search }) {
         </Link>
         <p className="price">
           <span className="main-price text-qgray line-through font-600 text-[18px]">
-            {datas.price}
+            {minPrice}
           </span>
           <span className="offer-price text-qred font-600 text-[18px] ml-2">
-            {datas.offer_price}
+            {/* {datas.offer_price} */}
+            {minPrice}
           </span>
         </p>
       </div>
       {/* quick-access-btns */}
-      <div className="quick-access-btns flex flex-col space-y-2 absolute group-hover:right-4 -right-10 top-20  transition-all duration-300 ease-in-out">
+      <div className="quick-access-btns flex flex-col space-y-2 absolute group-hover:right-8 -right-10 top-20  transition-all duration-300 ease-in-out">
         <a href="#">
           <span className="w-10 h-10 flex justify-center items-center bg-primarygray rounded">
             <QuickViewIco />
