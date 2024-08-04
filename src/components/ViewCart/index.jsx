@@ -17,11 +17,11 @@ export default function ViewCart({ wishlist = true }) {
     dispatch(getCartItems([]));
   };
 
-  useEffect(() => {
-    if (Array.isArray(items) && items.length === 0 && Array.isArray(cartItems) && cartItems.length > 0) {
-      dispatch(getCartItems(cartItems));
-    }
-  }, [cartItems, dispatch, items]);
+  // useEffect(() => {
+  //   if (Array.isArray(items) && items.length === 0 && Array.isArray(cartItems) && cartItems.length > 0) {
+  //     dispatch(getCartItems(cartItems));
+  //   }
+  // }, [cartItems, dispatch, items]);
 
   return (
     <Layout childrenClasses={wishlist ? "pt-0 pb-0" : ""}>

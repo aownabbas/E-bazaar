@@ -13,11 +13,13 @@ export default function Middlebar({ className, type }) {
   const items = useSelector((state) => state._items.cartItems);
   const cartItems = JSON.parse(localStorage.getItem('cartItems'));
   const dispatch = useDispatch();
-  useEffect(() => {
-    if (Array.isArray(items) && items.length === 0 && Array.isArray(cartItems) && cartItems.length > 0) {
-      dispatch(getCartItems(cartItems));
-    }
-  }, [cartItems,dispatch, items]);
+  console.log(items,"111111");
+  
+  // useEffect(() => {
+  //   if (Array.isArray(items) && items.length === 0 && Array.isArray(cartItems) && cartItems.length > 0) {
+  //     dispatch(getCartItems(cartItems));
+  //   }
+  // }, [cartItems,dispatch, items]);
 
   return (
     <div className={`w-full h-[86px] bg-white ${className}`}>

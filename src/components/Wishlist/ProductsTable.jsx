@@ -7,13 +7,15 @@ export default function ProductsTable({ className }) {
   const dispatch=useDispatch();
   const cartItems = JSON.parse(localStorage.getItem('cartItems'));
   const items = useSelector((state) => state._items.cartItems);
-  console.log(cartItems,"555555");
+  // console.log(items,"555555");
 
 const [itemsListing,setItemListing]=useState(cartItems)
   const YourComponent = ({ item }) => {
+const number=typeof(item?.price)
+// console.log(number,"type");
 
     // Ensure price and quantity are numbers
-    const price = Number(item.price.replace(/[^0-9.-]+/g, ""));
+    const price =typeof(item?.price) === "string" ? Number(item?.price?.replace(/[^0-9.-]+/g, "")) || 0 : item?.price;
     const quantity = Number(item.quantity);
 
     // Check for valid values
@@ -36,11 +38,11 @@ const [itemsListing,setItemListing]=useState(cartItems)
     localStorage.setItem('cartItems', JSON.stringify(updatedItems));
   };
 
-  useEffect(()=>{
-    if(items && items.length == 0){
-    dispatch(getCartItems(cartItems));
-  }
-  },[cartItems])
+  // useEffect(()=>{
+  //   if(items && items.length == 0){
+  //   dispatch(getCartItems(cartItems));
+  // }
+  // },[cartItems])
 
   return (
     <div className={`w-full ${className || ""}`}>

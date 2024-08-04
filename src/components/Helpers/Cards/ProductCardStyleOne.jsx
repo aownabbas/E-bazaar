@@ -55,11 +55,11 @@ export default function ProductCardStyleOne({ datas, type, search }) {
     dispatch(getCartItems(aggregatedItems));
   };
 
-  useEffect(() => {
-    if (Array.isArray(items) && items.length === 0 && Array.isArray(cartItems) && cartItems.length > 0) {
-      dispatch(getCartItems(cartItems));
-    }
-  }, [cartItems,dispatch, items]);
+  // useEffect(() => {
+  //   if (Array.isArray(items) && items.length === 0 && Array.isArray(cartItems) && cartItems.length > 0) {
+  //     dispatch(getCartItems(cartItems));
+  //   }
+  // }, [cartItems,dispatch, items]);
 
   return (
     <div

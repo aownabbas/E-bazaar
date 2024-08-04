@@ -2,7 +2,7 @@ import { CART_ITEMS } from "../types";
 
 const initialState = {
   loading: false,
-  cartItems: [],
+  cartItems: JSON.parse(localStorage.getItem('cartItems')) || [],
   error: "",
 };
 

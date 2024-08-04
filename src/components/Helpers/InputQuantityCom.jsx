@@ -8,12 +8,12 @@ export default function InputQuantityCom({item}) {
   const dispatch = useDispatch();
   const cartItems = JSON.parse(localStorage.getItem('cartItems'));
 
-  useEffect(() => {
-    setQuantity(item.quantity);
-    if(items && items.length == 0){
-      dispatch(getCartItems(cartItems));
-    }
-  }, [item.quantity]);
+  // useEffect(() => {
+  //   setQuantity(item.quantity);
+  //   if(items && items.length == 0){
+  //     dispatch(getCartItems(cartItems));
+  //   }
+  // }, [item.quantity]);
 
   const updateCartItems = (updatedItem) => {
     const updatedCartItems = items.map(cartItem =>
