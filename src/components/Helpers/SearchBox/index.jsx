@@ -31,15 +31,15 @@ export default function SearchBox({ className, type }) {
     setSelectedCategory({ title: category.title, id: category.id });
     setToggle(false);
   };
-
+  
   useEffect(() => {
-    const categoryId=Number(id)
+    const categoryId=parseInt(id)
 
-    if (categoriesList && categoryId !== undefined) {
+    if (categoriesList !== undefined && categoryId !== NaN) {
     const item=categoriesList?.find((item)=>item.id === categoryId && item)
     setSelectedCategory({
-      title: item?.title,
-      id: id ? id : 0,
+      title: id ? item?.title : "All Categories",
+      id: id ? categoryId : 0,
     });
     }
   }, [categoriesList]);
