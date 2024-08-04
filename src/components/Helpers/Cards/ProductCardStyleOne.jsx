@@ -17,13 +17,13 @@ export default function ProductCardStyleOne({ datas, type, search }) {
     const dispatch=useDispatch();
     const items = useSelector((state) => state._items.cartItems);
     const cartItems = JSON.parse(localStorage.getItem('cartItems'));
-    console.log(datas,"data");
-    const {product_stock}=datas;
-    const minPrice = product_stock?.reduce((min, product) => {
-      return product.price_per_unit < min ? product.price_per_unit : min;
-    }, product_stock[0].price_per_unit);
+    // console.log(datas,"data");
+    // const {product_stock}=datas;
+    // const minPrice = product_stock?.reduce((min, product) => {
+    //   return product.price_per_unit < min ? product.price_per_unit : min;
+    // }, product_stock[0].price_per_unit);
     
-    console.log(minPrice,"gggggg");
+    // console.log(minPrice,"gggggg");
     
     const addToCartItem = (datas) => {
 
@@ -155,11 +155,11 @@ export default function ProductCardStyleOne({ datas, type, search }) {
         </Link>
         <p className="price">
           <span className="main-price text-qgray line-through font-600 text-[18px]">
-            {minPrice}
+            {datas.price}
           </span>
           <span className="offer-price text-qred font-600 text-[18px] ml-2">
             {/* {datas.offer_price} */}
-            {minPrice}
+            {datas.price}
           </span>
         </p>
       </div>

@@ -22,23 +22,23 @@ export default function Home() {
   products.forEach((product) => {
     brands.push(product.brand);
   });
-  const dispatch = useDispatch();
-  const fetchCategoriesList = async () => {
-      try {
-        const response = await _getCategories();
-        if (response.status === 200) {
-          dispatch(_getCategoriesList(response.data));
-        }
-      } catch (error) {
-        errorRequestHandel({ error: error });
-      } finally {
-        // setLoading(false);
-      }
-    };
+  // const dispatch = useDispatch();
+  // const fetchCategoriesList = async () => {
+  //     try {
+  //       const response = await _getCategories();
+  //       if (response.status === 200) {
+  //         dispatch(_getCategoriesList(response.data));
+  //       }
+  //     } catch (error) {
+  //       errorRequestHandel({ error: error });
+  //     } finally {
+  //       // setLoading(false);
+  //     }
+  //   };
 
-  useEffect(() => {
-    fetchCategoriesList()
-  }, []);
+  // useEffect(() => {
+  //   fetchCategoriesList()
+  // }, []);
 
 
   return (

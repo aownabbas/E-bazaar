@@ -42,11 +42,11 @@ export default function AllProductPage() {
   const dispatch = useDispatch();
   const { searchedProducts } = useSelector((state) => state.searchedProducts);
   const searchParams  = useSelector((state) => state.searchParams.searchParams);
-  console.log(searchedProducts, "searchedProducts");
   const [filterProductsIds, setFilterProductsIds] = useState([]);
   const [categoryToggle1, setToggle1] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("Price");
   const [elementsSize, setSize] = useState("0px");
+  const [productList,setProductList]=useState([])
   const dropdownRef = useRef(null);
   const query = new URLSearchParams(useLocation().search);
   const id = query.get('id');
@@ -77,6 +77,7 @@ export default function AllProductPage() {
     try {
       const response = await _searchedCategories(payload);
       if (response.status === 200) {
+      
         dispatch(getSearchedProducts(response.data));
       }
     } catch (error) {
@@ -85,7 +86,7 @@ export default function AllProductPage() {
       // setLoading(false);
     }
   };
-  const [volume, setVolume] = useState({ min: 0, max: 1000 });
+  const [volume, setVolume] = useState({ min: 0, max: 5000 });
   const [search, setSearch] = useState(true);
 
   const [storage, setStorage] = useState(null);
@@ -146,6 +147,21 @@ export default function AllProductPage() {
       // setLoading(false);
     }
   };
+  // console.log(searchedProducts,"check");
+  useEffect(() => {
+    if(products && products.length > 0){
+      products?.forEach(product => {
+    const minPrice = Math.min(...product.product_stock.map(stock => stock.price_per_unit));
+    product.price = minPrice;
+  });
+  setProductList(products)
+  // console.log(products,"check");
+}else{
+  setProductList([])
+}
+}, [products]);
+  
+  
 
   const handleProductSort = (order) => {
     setSelectedCategory(order)
@@ -162,13 +178,15 @@ export default function AllProductPage() {
 };
 
 const pricRangeHandler=(value)=>{
+  console.log(value,"hhhh");
+  
   setVolume({min:value[0],max:value[1]})
   // const { min, max }=volume;
-  const filteredItems = products.filter(item => item.price >= volume.min && item.price <= volume.max);
+  const filteredItems = productList.filter(item => item.price >= volume.min && item.price <= volume.max);
   dispatch(getSearchedProducts({ categories: categories, products: filteredItems}))
+  setProductList(filteredItems)
 }
 
-// console.log(handleProductSort((products, 'ascending')));
   return (
     <>
       <Layout>
@@ -291,7 +309,7 @@ const pricRangeHandler=(value)=>{
                   </button>
                 </div>
                 <div className="grid xl:grid-cols-3 sm:grid-cols-2 grid-cols-1  xl:gap-[30px] gap-5 mb-[40px]">
-                  <DataIteration datas={products} startLength={0} endLength={products?.length}>
+                  <DataIteration datas={productList} startLength={0} endLength={productList?.length}>
                     {({ datas }) => (
                       <div data-aos="fade-up" key={datas.id}>
                         <ProductCardStyleOne datas={datas} search={search} />

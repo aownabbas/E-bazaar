@@ -87,7 +87,7 @@ export default function ProductsFilter({
               value={volume}
               onInput={volumeHandler}
               min={10}
-              max={1000}
+              max={5000}
             />
           </div>
           <p className="text-xs text-qblack font-400">

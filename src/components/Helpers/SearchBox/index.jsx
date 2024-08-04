@@ -6,24 +6,21 @@ import { getSearchedProducts, getSearchParameters } from "../../../redux/action/
 import { errorRequestHandel } from "../../../utils.js/helper";
 
 export default function SearchBox({ className, type }) {
+  const { categoriesList } = useSelector((state) => state.categoriesList);
   const [categoryToggle, setToggle] = useState(false);
   const [elementsSize, setSize] = useState("0px");
   const query = new URLSearchParams(useLocation().search);
   const id = query.get('id');
   const string = query.get('string');
-  const title = query.get('title');
   const [selectedCategory, setSelectedCategory] = useState({
-    title: title ? title : "All Categories",
+    title: "All Categories",
     id: id ? id : 0,
   });
   const [searchString, setSearchString] = useState(string ? string :"");
-  const { categoriesList } = useSelector((state) => state.categoriesList);
   const searchParams  = useSelector((state) => state.searchParams.searchParams);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
-  console.log(searchParams,"gggggggg");
   
 
   const handler = () => {
@@ -36,6 +33,19 @@ export default function SearchBox({ className, type }) {
   };
 
   useEffect(() => {
+    const categoryId=Number(id)
+
+    if (categoriesList && categoryId !== undefined) {
+    const item=categoriesList?.find((item)=>item.id === categoryId && item)
+    setSelectedCategory({
+      title: item?.title,
+      id: id ? id : 0,
+    });
+    }
+  }, [categoriesList]);
+
+  useEffect(() => {
+    
     if (categoryToggle) {
       const getItems = document.querySelectorAll(`.categories-list li`).length;
       if (getItems > 0) {
@@ -70,7 +80,7 @@ export default function SearchBox({ className, type }) {
       const response = await _searchedCategories(payload);
       if (response.status === 200) {
         dispatch(getSearchedProducts(response.data));
-        navigate(`/all-products?id=${selectedCategory.id}&title=${selectedCategory.title}&string=${searchString}`);
+        navigate(`/all-products?id=${selectedCategory.id}&string=${searchString}`);
       }
     } catch (error) {
       errorRequestHandel({ error: error });
