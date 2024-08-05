@@ -381,3 +381,10 @@ body {
 }
 
 /* TODO: ===============productCardStyleOne */
+
+
+/* TODO: ===============productFilters */
+
+.MuiSlider-root {
+  color: grey !important;
+}

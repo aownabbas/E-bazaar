@@ -24,6 +24,7 @@ export const _getBannersList = (data) => {
 };
 
 export const getSearchedProducts = (data) => {
+  
   return (dispatch) => {
     dispatch({
       type: GET_SEARCHED_PRODUCTS,

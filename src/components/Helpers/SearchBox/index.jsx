@@ -14,7 +14,7 @@ export default function SearchBox({ className, type }) {
   const string = query.get('string');
   const [selectedCategory, setSelectedCategory] = useState({
     title: "All Categories",
-    id: id ? id : 0,
+    id: 0,
   });
   const [searchString, setSearchString] = useState(string ? string :"");
   const searchParams  = useSelector((state) => state.searchParams.searchParams);
@@ -35,11 +35,11 @@ export default function SearchBox({ className, type }) {
   useEffect(() => {
     const categoryId=parseInt(id)
 
-    if (categoriesList !== undefined && categoryId !== NaN) {
+  if (categoriesList !== undefined && categoryId !== 0 && !isNaN(categoryId)){
     const item=categoriesList?.find((item)=>item.id === categoryId && item)
     setSelectedCategory({
-      title: id ? item?.title : "All Categories",
-      id: id ? categoryId : 0,
+      title: item?.title,
+      id: categoryId,
     });
     }
   }, [categoriesList]);
@@ -170,7 +170,7 @@ export default function SearchBox({ className, type }) {
                   className={`flex justify-between items-center px-5 h-10 bg-white transition-all duration-300 ease-in-out cursor-pointer text-qblack hover:bg-qyellow`}
                 >
                   <div className="flex items-center space-x-6">
-                    <span className="text-xs font-400">All</span>
+                    <span className="text-xs font-400">All Categories</span>
                   </div>
                 </div>
               </li>

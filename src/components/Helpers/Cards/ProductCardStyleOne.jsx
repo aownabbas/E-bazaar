@@ -60,6 +60,7 @@ export default function ProductCardStyleOne({ datas, type, search }) {
   //     dispatch(getCartItems(cartItems));
   //   }
   // }, [cartItems,dispatch, items]);
+  
 
   return (
     <div

@@ -10,38 +10,15 @@ import { getSearchedProducts } from "../../redux/action/categories";
 import { errorRequestHandel } from "../../utils.js/helper";
 import { _searchedCategories } from "../../https/categories";
 import { useLocation, useParams } from "react-router-dom";
+import getCartItems from "../../redux/action/cartActions";
 
 export default function AllProductPage() {
-  const [filters, setFilter] = useState({
-    mobileLaptop: false,
-    gaming: false,
-    imageVideo: false,
-    vehicles: false,
-    furnitures: false,
-    sport: false,
-    foodDrinks: false,
-    fashion: false,
-    toilet: false,
-    makeupCorner: false,
-    babyItem: false,
-    apple: false,
-    samsung: false,
-    walton: false,
-    oneplus: false,
-    vivo: false,
-    oppo: false,
-    xiomi: false,
-    others: false,
-    sizeS: false,
-    sizeM: false,
-    sizeL: false,
-    sizeXL: false,
-    sizeXXL: false,
-    sizeFit: false,
-  });
+
   const dispatch = useDispatch();
   const { searchedProducts } = useSelector((state) => state.searchedProducts);
   const searchParams  = useSelector((state) => state.searchParams.searchParams);
+  
+  
   const [filterProductsIds, setFilterProductsIds] = useState([]);
   const [categoryToggle1, setToggle1] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("Price");
@@ -86,7 +63,7 @@ export default function AllProductPage() {
       // setLoading(false);
     }
   };
-  const [volume, setVolume] = useState({ min: 0, max: 5000 });
+
   const [search, setSearch] = useState(true);
 
   const [storage, setStorage] = useState(null);
@@ -95,8 +72,8 @@ export default function AllProductPage() {
   };
   const [filterToggle, setToggle] = useState(false);
 
-  // const { products } = productDatas;
   const { products, categories } = searchedProducts;
+  
 
 // toggle products by ascending or descending code 
   const handler = () => {
@@ -147,19 +124,20 @@ export default function AllProductPage() {
       // setLoading(false);
     }
   };
-  // console.log(searchedProducts,"check");
   useEffect(() => {
     if(products && products.length > 0){
       products?.forEach(product => {
     const minPrice = Math.min(...product.product_stock.map(stock => stock.price_per_unit));
     product.price = minPrice;
   });
+  
   setProductList(products)
-  // console.log(products,"check");
-}else{
-  setProductList([])
+  dispatch(getSearchedProducts({ categories: categories, products: products}));
 }
-}, [products]);
+// else{
+//   setProductList([])
+// }
+}, [products,dispatch]);
   
   
 
@@ -167,9 +145,9 @@ export default function AllProductPage() {
     setSelectedCategory(order)
     setToggle1(false)
     const sortedProducts = products?.sort((a, b) => {
-        if (order === 'ascending') {
+        if (order === 'Low to high') {
             return a.price - b.price;
-        } else if (order === 'descending') {
+        } else if (order === 'High to low') {
             return b.price - a.price;
         }
     });
@@ -177,35 +155,65 @@ export default function AllProductPage() {
     dispatch(getSearchedProducts({ categories: categories, products: sortedProducts}));
 };
 
-const pricRangeHandler=(value)=>{
-  console.log(value,"hhhh");
+const [selectCategory, setCategoryTitle] = useState({
+  title: "All Categories",
+  id: 0,
+});
+const { categoriesList } = useSelector((state) => state.categoriesList);
   
-  setVolume({min:value[0],max:value[1]})
-  // const { min, max }=volume;
-  const filteredItems = productList.filter(item => item.price >= volume.min && item.price <= volume.max);
-  dispatch(getSearchedProducts({ categories: categories, products: filteredItems}))
-  setProductList(filteredItems)
-}
+  useEffect(() => {
+    const categoryId=parseInt(id)
+
+  if (categoriesList !== undefined && categoryId !== 0 && !isNaN(categoryId)){
+    const item=categoriesList?.find((item)=>item.id === categoryId && item)
+    setCategoryTitle({
+      title: item?.title,
+      id: categoryId,
+    });
+    }
+  }, [categoriesList]);
+
+  // const targetHour=17;
+  // const targetMinute=13;
+  const date = new Date();
+  const hours = date.getHours();
+  // const minutes = date.getMinutes();
+  // const ampm = hours >= 12 ? 'PM' : 'AM';
+  
+  const [timeLeft, setTimeLeft] = useState(60); // Set initial countdown time in seconds
+
+  useEffect(() => {
+    // Exit early if timer reaches 0
+    if (hours === 4 ){
+      localStorage.removeItem("cartItems")
+      dispatch(getCartItems([]));
+      return;
+    } 
+    // Set up an interval that counts down every second
+    const intervalId = setInterval(() => {
+      setTimeLeft(timeLeft - 1);
+    }, 1000);
+
+    // Clean up the interval when the component is unmounted or when timeLeft changes
+    return () => clearInterval(intervalId);
+  }, [timeLeft]);
 
   return (
     <>
       <Layout>
         <div className="products-page-wrapper w-full">
           <div className="container-x mx-auto">
-            <BreadcrumbCom />
+            <BreadcrumbCom title={selectCategory.title} />
             <div className="w-full lg:flex lg:space-x-[30px]">
               <div className="lg:w-[270px]">
                 <ProductsFilter
                   filterToggle={filterToggle}
                   filterToggleHandler={() => setToggle(!filterToggle)}
-                  filters={filters}
                   checkboxHandler={checkboxHandler}
-                  volume={volume}
-                  volumeHandler={(value) => pricRangeHandler(value)}
-                  storage={storage}
                   filterstorage={filterStorage}
                   className="mb-[30px]"
                   categoriesList={categories}
+                  setProductList={setProductList}
                 />
                 {/* ads */}
                 {/* <div className="w-full hidden lg:block h-[295px]">
@@ -222,7 +230,7 @@ const pricRangeHandler=(value)=>{
                 <div className="products-sorting w-full bg-white md:h-[70px] flex md:flex-row flex-col md:space-y-0 space-y-5 md:justify-between md:items-center p-[30px] mb-[40px]">
                   <div>
                     <p className="font-400 text-[13px]">
-                      <span className="text-qgray"> Showing</span> 1–6 of {products?.length}
+                      <span className="text-qgray"> Showing</span> {productList?.length} of 12 
                       results
                     </p>
                   </div>
@@ -255,32 +263,32 @@ const pricRangeHandler=(value)=>{
                       style={{ height: `${elementsSize} ` }}
                       ref={dropdownRef}
                     >
-                      <ul className="categories-list w-[160px]">
+                      <ul className="categories-list w-[130px]">
                         <li
                           className="category-item border-t border-qgray-border"
                           onClick={() =>
-                            handleProductSort("ascending")
+                            handleProductSort("Low to high")
                           }
                         >
                           <div
                             className={`flex justify-between items-center px-5 h-10 bg-white transition-all duration-300 ease-in-out cursor-pointer text-qblack hover:bg-qyellow`}
                           >
                             <div className="flex items-center space-x-6">
-                              <span className="text-xs font-400">Ascending by Price</span>
+                              <span className="text-xs font-400">Low to high</span>
                             </div>
                           </div>
                         </li>
                         <li
                           className="category-item border-t border-qgray-border"
                           onClick={() =>
-                            handleProductSort("descending")
+                            handleProductSort("High to low")
                           }
                         >
                           <div
                             className={`flex justify-between items-center px-5 h-10 bg-white transition-all duration-300 ease-in-out cursor-pointer text-qblack hover:bg-qyellow`}
                           >
                             <div className="flex items-center space-x-6">
-                              <span className="text-xs font-400">Descending by Price</span>
+                              <span className="text-xs font-400">High to low</span>
                             </div>
                           </div>
                         </li>

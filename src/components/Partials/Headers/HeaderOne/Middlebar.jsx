@@ -13,7 +13,6 @@ export default function Middlebar({ className, type }) {
   const items = useSelector((state) => state._items.cartItems);
   const cartItems = JSON.parse(localStorage.getItem('cartItems'));
   const dispatch = useDispatch();
-  console.log(items,"111111");
   
   // useEffect(() => {
   //   if (Array.isArray(items) && items.length === 0 && Array.isArray(cartItems) && cartItems.length > 0) {
