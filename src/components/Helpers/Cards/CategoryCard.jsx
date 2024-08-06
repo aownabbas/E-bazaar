@@ -9,7 +9,7 @@ export default function CategoryCard({ background, title, brands = [] }) {
           background ||
           `${
             import.meta.env.VITE_PUBLIC_URL
-          }/assets/images/section-category-1.jpg`
+          }/assets/images/electronics.png`
         }) no-repeat`,
         backgroundSize: "cover",
       }}
@@ -29,7 +29,7 @@ export default function CategoryCard({ background, title, brands = [] }) {
             ))}
           </ul>
         </div>
-        <a href="#">
+        {/* <a href="#">
           <div className="flex space-x-2 items-center">
             <span className="text-qblack font-600 text-sm">Shop Now</span>
             <span>
@@ -59,7 +59,7 @@ export default function CategoryCard({ background, title, brands = [] }) {
               </svg>
             </span>
           </div>
-        </a>
+        </a> */}
       </div>
     </div>
   );

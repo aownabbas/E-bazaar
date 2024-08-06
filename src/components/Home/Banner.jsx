@@ -180,7 +180,7 @@ export default function Banner({ className }) {
                       Free Shipping
                     </p>
                     <p className="text-sm text-qgray">
-                      When ordering over $100
+                      On selected items
                     </p>
                   </div>
                 </div>
@@ -217,7 +217,7 @@ export default function Banner({ className }) {
                       Free Return
                     </p>
                     <p className="text-sm text-qgray">
-                      Get Return within 30 days
+                      Get Return within 7 days
                     </p>
                   </div>
                 </div>

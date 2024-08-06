@@ -10,7 +10,7 @@ export default function Footer({ type }) {
         <div className="w-full flex flex-col items-center mb-[50px]">
           {/* logo area */}
           <div className="mb-[40px]">
-            {type === 3 ? (
+            {/* {type === 3 ? (
               <Link to="/">
                 <img
                   width="152"
@@ -32,22 +32,42 @@ export default function Footer({ type }) {
                   alt="logo"
                 />
               </Link>
-            )}
+            )} */}
+            <Link to="/">
+              <img
+                width="172"
+                height="46"
+                src="/assets/ebazaar-images/e-bazaar_logo_new.webp"
+                alt="logo"
+              />
+            </Link>
           </div>
           <div className="w-full h-[1px] bg-[#E9E9E9]"></div>
         </div>
         <div className="lg:flex justify-between mb-[50px]">
           <div className="lg:w-[424px]  ml-0 w-full mb-10 lg:mb-0">
-            <h1 className="text-[18] font-500 text-[#2F2F2F] mb-5">About Us</h1>
+            {/* <h1 className="text-[18] font-500 text-[#2F2F2F] mb-5">About Us</h1> */}
+            <div className="mb-5">
+              <Link to="/">
+                <img
+                  width="200"
+                  height="30"
+                  src="/assets/ebazaar-images/e-bazaar_logo_new.webp"
+                  alt="logo"
+                />
+              </Link>
+            </div>
             <p className="text-[#9A9A9A] text-[15px] w-[247px] leading-[28px]">
-              We know there are a lot of threa developers our but we pride into
-              a firm in the industry.
+              Creating an inclusive online marketplace for diverse shoppers in
+              Islamabad and beyond. Empowering local businesses and artisans
+              through a digital platform to showcase products and thrive in the
+              e-commerce landscape.
             </p>
           </div>
           <div className="flex-1 lg:flex">
             <div className="lg:w-1/3 w-full mb-10 lg:mb-0">
               <div className="mb-5">
-                <h6 className="text-[18] font-500 text-[#2F2F2F]">Feature</h6>
+                <h6 className="text-[18] font-500 text-[#2F2F2F]">About</h6>
               </div>
               <div>
                 <ul className="flex flex-col space-y-4 ">
@@ -59,6 +79,13 @@ export default function Footer({ type }) {
                     </Link>
                   </li>
                   <li>
+                    <Link to="/faq">
+                      <span className="text-[#9A9A9A] text-[15px] hover:text-qblack border-b border-transparent hover:border-qblack cursor-pointer capitalize">
+                        FAQ
+                      </span>
+                    </Link>
+                  </li>
+                  <li>
                     <Link to="/terms-condition">
                       <span className="text-[#9A9A9A] text-[15px] hover:text-qblack border-b border-transparent hover:border-qblack cursor-pointer capitalize">
                         Terms Condition
@@ -66,12 +93,26 @@ export default function Footer({ type }) {
                     </Link>
                   </li>
                   <li>
+                    <Link to="/blogs">
+                      <span className="text-[#9A9A9A] text-[15px] hover:text-qblack border-b border-transparent hover:border-qblack cursor-pointer capitalize">
+                        Our Blogs
+                      </span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="">
+                      <span className="text-[#9A9A9A] text-[15px] hover:text-qblack border-b border-transparent hover:border-qblack cursor-pointer capitalize">
+                        Privacy & Policy
+                      </span>
+                    </Link>
+                  </li>
+                  {/* <li>
                     <Link to="/all-products">
                       <span className="text-[#9A9A9A] text-[15px] hover:text-qblack border-b border-transparent hover:border-qblack cursor-pointer capitalize">
                         Best Products
                       </span>
                     </Link>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
             </div>
@@ -79,19 +120,40 @@ export default function Footer({ type }) {
               <div>
                 <div className="mb-5">
                   <h6 className="text-[18] font-500 text-[#2F2F2F]">
-                    General Links
+                    Services
                   </h6>
                 </div>
                 <div>
                   <ul className="flex flex-col space-y-4 ">
                     <li>
-                      <Link to="/blogs">
+                      <Link to="/">
                         <span className="text-[#9A9A9A] text-[15px] hover:text-qblack border-b border-transparent hover:border-qblack cursor-pointer capitalize">
-                          Blog
+                          Payment Methods
                         </span>
                       </Link>
                     </li>
                     <li>
+                      <Link to="">
+                        <span className="text-[#9A9A9A] text-[15px] hover:text-qblack border-b border-transparent hover:border-qblack cursor-pointer capitalize">
+                          Money Refund
+                        </span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/">
+                        <span className="text-[#9A9A9A] text-[15px] hover:text-qblack border-b border-transparent hover:border-qblack cursor-pointer capitalize">
+                          Return Policy
+                        </span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="">
+                        <span className="text-[#9A9A9A] text-[15px] hover:text-qblack border-b border-transparent hover:border-qblack cursor-pointer capitalize">
+                          Shipping Policy
+                        </span>
+                      </Link>
+                    </li>
+                    {/* <li>
                       <Link to="/tracking-order">
                         <span className="text-[#9A9A9A] text-[15px] hover:text-qblack border-b border-transparent hover:border-qblack cursor-pointer capitalize">
                           Tracking Order
@@ -104,7 +166,7 @@ export default function Footer({ type }) {
                           Become Seller
                         </span>
                       </Link>
-                    </li>
+                    </li> */}
                   </ul>
                 </div>
               </div>
@@ -112,10 +174,18 @@ export default function Footer({ type }) {
             <div className="lg:w-1/3 lg:flex lg:flex-col items-center w-full mb-10 lg:mb-0">
               <div>
                 <div className="mb-5">
-                  <h6 className="text-[18] font-500 text-[#2F2F2F]">Helpful</h6>
+                  <h6 className="text-[18] font-500 text-[#2F2F2F]">
+                    Contact Us
+                  </h6>
                 </div>
                 <div>
-                  <ul className="flex flex-col space-y-4 ">
+                  <p className="text-[#9A9A9A] text-[15px] w-[247px] leading-[28px]">
+                    Floor 15, State Life Tower Jinnah Avenue, Blue Area
+                    Islamabad, Pakistan.
+                    <br/> Tel: 0512308311<br/> Mobile: 03325555880<br/>
+                    Email: Info@e-bazaaronline.com
+                  </p>
+                  {/* <ul className="flex flex-col space-y-4 ">
                     <li>
                       <Link to="/flash-sale">
                         <span className="text-[#9A9A9A] text-[15px] hover:text-qblack border-b border-transparent hover:border-qblack cursor-pointer capitalize">
@@ -123,13 +193,7 @@ export default function Footer({ type }) {
                         </span>
                       </Link>
                     </li>
-                    <li>
-                      <Link to="/faq">
-                        <span className="text-[#9A9A9A] text-[15px] hover:text-qblack border-b border-transparent hover:border-qblack cursor-pointer capitalize">
-                          FAQ
-                        </span>
-                      </Link>
-                    </li>
+                    
                     <li>
                       <Link to="/about">
                         <span className="text-[#9A9A9A] text-[15px] hover:text-qblack border-b border-transparent hover:border-qblack cursor-pointer capitalize">
@@ -137,7 +201,7 @@ export default function Footer({ type }) {
                         </span>
                       </Link>
                     </li>
-                  </ul>
+                  </ul> */}
                 </div>
               </div>
             </div>

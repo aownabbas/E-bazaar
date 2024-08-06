@@ -21,7 +21,7 @@ export default function Navbar({ className, type }) {
     if (categoryToggle) {
       const getItems = document.querySelectorAll(`.categories-list li`).length;
       if (categoryToggle && getItems > 0) {
-        setSize(`${14 * getItems}px`);
+        setSize(`${13.6 * getItems}px`);
         setWidthSize("500px");
       }
     } else {
@@ -112,7 +112,7 @@ export default function Navbar({ className, type }) {
                                 className={`flex justify-between items-center px-5 h-10 bg-white  transition-all duration-300 ease-in-out cursor-pointer text-qblack ${
                                   type === 3
                                     ? "hover:bg-qh3-blue hover:text-white"
-                                    : "hover:bg-qyellow"
+                                    : "hover:bg-custom-orange"
                                 }`}
                                 onMouseOver={() =>
                                   handleSubCategoriesOver(item.sub_categories)

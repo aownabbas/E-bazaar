@@ -152,21 +152,21 @@ export default function CampaignCountDown({
                           height="69"
                           src={`${
                             import.meta.env.VITE_PUBLIC_URL
-                          }/assets/images/apple-store.png`}
+                          }/assets/images/app-store.webp`}
                           alt=""
                         />
                       </a>
                     </div>
                   </div>
                 </div>
-                <div className="app-screen">
-                  <img
+                <div className="w-full h-[200px]">
+                  <img className="bg-cover bg-center w-full h-[200px]"
                     src={
                       appscreen ||
                       `${
                         import.meta.env.VITE_PUBLIC_URL
-                      }/assets/images/app-screen.png`
-                    }
+                      }/assets/images/mobile.png`
+                    } 
                     alt=""
                   />
                 </div>

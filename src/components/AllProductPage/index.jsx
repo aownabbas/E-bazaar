@@ -203,7 +203,9 @@ const { categoriesList } = useSelector((state) => state.categoriesList);
       <Layout>
         <div className="products-page-wrapper w-full">
           <div className="container-x mx-auto">
-            <BreadcrumbCom title={selectCategory.title} />
+            <BreadcrumbCom 
+            // title={selectCategory.title} 
+            paths = {[{ name: "home", path: "/" },{ name: selectCategory.title, }]} />
             <div className="w-full lg:flex lg:space-x-[30px]">
               <div className="lg:w-[270px]">
                 <ProductsFilter

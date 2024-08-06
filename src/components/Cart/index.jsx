@@ -24,10 +24,10 @@ export default function Cart({ className, type }) {
         }  ${className || ""}`}
       >
         <div className="w-full h-full">
-        {items && items.length > 0 ? (
+        {items && items?.length > 0 ? (
           <div className="product-items h-[310px] overflow-y-scroll">
               <ul>
-                {items.map((item,index) => (
+                {items?.map((item,index) => (
                   <li className="w-full h-full flex" key={index}>
                     <div className="flex space-x-[6px] justify-center items-center px-4 my-[20px]">
                       <div className="w-[65px] h-full">

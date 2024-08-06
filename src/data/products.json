@@ -2,7 +2,7 @@
   "products": [
     {
       "id": "62aefe9ad8b80d5234af625a",
-      "image": "product-img-1.jpg",
+      "image":"product-img-3.jpg",
       "brand": "xioami",
       "review": 3,
       "title": "Xoggle aute et pariatur adipisicing nostrud et excepteur",
@@ -15,7 +15,7 @@
     },
     {
       "id": "62aefe9a17780a9e549646c2",
-      "image": "product-img-2.jpg",
+      "image": "product-img-3.jpg",
       "brand": "apple",
       "review": 5,
       "title": "Geeky ipsum esse repreh est consequat",
@@ -41,7 +41,7 @@
     },
     {
       "id": "62aefe9a6e662e77accd4cc4",
-      "image": "product-img-4.jpg",
+      "image": "product-img-3.jpg",
       "brand": "google",
       "review": 5,
       "title": "Senmei ipsum dolore eiusmod dolor officia do nisi",
@@ -54,7 +54,7 @@
     },
     {
       "id": "62aefe9a9e1c4b69e47fa40f",
-      "image": "product-img-5.jpg",
+      "image": "product-img-3.jpg",
       "brand": "xioami",
       "review": 5,
       "title": "Canopoly duis voluptate dolor sunt sit adipisicing in",
@@ -67,7 +67,7 @@
     },
     {
       "id": "62aefe9aa96283a41a9b46fc",
-      "image": "product-img-6.jpg",
+      "image": "product-img-3.jpg",
       "brand": "xioami",
       "review": 5,
       "title": "Unisure aliqua repreh ex cupt qui elit officia",
@@ -80,7 +80,7 @@
     },
     {
       "id": "62aefe9aa2577bc8fa4ea7bc",
-      "image": "product-img-7.jpg",
+      "image": "product-img-3.jpg",
       "brand": "xioami",
       "review": 5,
       "title": "Kenegy consectetur id ex nulla in adipisicing deserunt",
@@ -93,7 +93,7 @@
     },
     {
       "id": "62aefe9aa117932437d0da93",
-      "image": "product-img-8.jpg",
+      "image": "product-img-3.jpg",
       "brand": "samsung",
       "review": 5,
       "title": "Bizmatic consequat enim quis sit et est eiusmod",
@@ -106,7 +106,7 @@
     },
     {
       "id": "62aefe9a93cc2c0e16ddb207",
-      "image": "product-img-9.jpg",
+      "image": "product-img-3.jpg",
       "brand": "apple",
       "review": 5,
       "title": "Anarco consectetur magna nostrud commodo tempor aliqua laborum",
@@ -119,7 +119,7 @@
     },
     {
       "id": "62aefe9a39099843b144dc3a",
-      "image": "product-img-10.jpg",
+      "image": "product-img-3.jpg",
       "brand": "samsung",
       "review": 5,
       "title": "Plasto cillum ad minim elit fugiat esse dolore",
@@ -132,7 +132,7 @@
     },
     {
       "id": "62aefe9af9a0e865ee49c999999e",
-      "image": "product-img-1.jpg",
+      "image": "product-img-3.jpg",
       "brand": "apple",
       "review": 5,
       "title": "Conjurica ea magna eiusmod esse cupt anim aliquip",
@@ -145,7 +145,7 @@
     },
     {
       "id": "62aefe9a9a52d2ee3301918a",
-      "image": "product-img-2.jpg",
+      "image": "product-img-3.jpg",
       "brand": "google",
       "review": 5,
       "title": "Empirica deserunt laborum ad quis labore labore eu",
@@ -171,7 +171,7 @@
     },
     {
       "id": "62aefe9a05ca1ea50003e072",
-      "image": "product-img-4.jpg",
+      "image":"product-img-3.jpg",
       "brand": "google",
       "review": 5,
       "title": "Comvoy irure occaecat aliquip do commodo in",
@@ -184,7 +184,7 @@
     },
     {
       "id": "62aefe9a369487a7db38e327",
-      "image": "product-img-5.jpg",
+      "image": "product-img-3.jpg",
       "brand": "xioami",
       "review": 5,
       "title": "Zizzle ad proident do enim nisi quis",
@@ -197,7 +197,7 @@
     },
     {
       "id": "62aefe9ab5a58ec7eba5e003",
-      "image": "product-img-16.jpg",
+      "image": "product-img-3.jpg",
       "brand": "xioami",
       "review": 5,
       "title": "Quintity consequat ad sit non tempor consequat",
@@ -210,7 +210,7 @@
     },
     {
       "id": "62aefe9acd2d5e4c13d5937c",
-      "image": "product-img-17.jpg",
+      "image": "product-img-3.jpg",
       "brand": "google",
       "review": 5,
       "title": "Musaphics consequat consectetur aliquip nulla deserunt non ea",

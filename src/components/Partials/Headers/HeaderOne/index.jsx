@@ -58,16 +58,14 @@ export default function HeaderOne({ className, drawerAction, type = 1 }) {
                 <img
                   width="152"
                   height="36"
-                  src={`${
-                    import.meta.env.VITE_PUBLIC_URL
-                  }/assets/images/logo.svg`}
+                  src="/assets/ebazaar-images/e-bazaar_logo_new.webp"
                   alt="logo"
                 />
               </Link>
             )}
           </div>
           <div className="cart relative cursor-pointer">
-            <Link to="/cart">
+            <Link to="/view-cart">
               <span>
                 <ThinBag />
               </span>

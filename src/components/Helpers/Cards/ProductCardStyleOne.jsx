@@ -16,7 +16,7 @@ export default function ProductCardStyleOne({ datas, type, search }) {
     100;
     const dispatch=useDispatch();
     const items = useSelector((state) => state._items.cartItems);
-    const cartItems = JSON.parse(localStorage.getItem('cartItems'));
+    // const cartItems = JSON.parse(localStorage.getItem('cartItems'));
     // console.log(datas,"data");
     // const {product_stock}=datas;
     // const minPrice = product_stock?.reduce((min, product) => {
@@ -67,20 +67,20 @@ export default function ProductCardStyleOne({ datas, type, search }) {
       className="product-card-one w-full h-full bg-white relative group overflow-hidden"
       style={{ boxShadow: "0px 15px 64px 0px rgba(0, 0, 0, 0.05)" }}
     >
-      <div className={search ? ` px-6 py-6`:""}>
+      <div className={` px-6 py-6`}>
       <div
-        className={search ? `product-card-img w-full h-[250px]` : `product-card-img w-full h-[300px]`}
+        className={ `product-card-img w-full h-[250px] `}
         style={{
           background: search ?  `url(${import.meta.env.VITE_PRODUCTS_IMAGES_URL}${
             datas.photo
-          }) no-repeat center`: `url(${import.meta.env.VITE_PUBLIC_URL}/assets/images/${
+          }) no-repeat `: `url(${import.meta.env.VITE_PUBLIC_URL}/assets/images/${
              datas.image
            }) no-repeat center`,
            backgroundSize: search ? "cover" : "", 
         }}
       >
         {/* product available progress */}
-        {datas.campaingn_product && (
+        {/* {datas.campaingn_product && (
           <>
             <div className="px-[30px] absolute left-0 top-3 w-full">
               <div className="progress-title flex justify-between ">
@@ -103,9 +103,9 @@ export default function ProductCardStyleOne({ datas, type, search }) {
               </div>
             </div>
           </>
-        )}
+        )} */}
         {/* product type */}
-        {datas.product_type && !datas.campaingn_product && (
+        {/* {datas.product_type && !datas.campaingn_product && (
           <div className="product-type absolute right-[14px] top-[17px]">
             <span
               className={`text-[9px] font-700 leading-none py-[6px] px-3 uppercase text-white rounded-full tracking-wider ${
@@ -115,7 +115,7 @@ export default function ProductCardStyleOne({ datas, type, search }) {
               {datas.product_type}
             </span>
           </div>
-        )}
+        )} */}
       </div>
       </div>
       <div className="product-card-details px-[30px] pb-[30px] relative">
