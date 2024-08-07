@@ -105,8 +105,8 @@ export default function Navbar({ className, type }) {
                     <ul className="categories-list">
                       {categoriesList &&
                         categoriesList.length > 0 &&
-                        categoriesList?.map((item) => (
-                          <li className="category-item">
+                        categoriesList?.map((item,index) => (
+                          <li className="category-item" key={index}>
                             <Link to="/all-products">
                               <div
                                 className={`flex justify-between items-center px-5 h-10 bg-white  transition-all duration-300 ease-in-out cursor-pointer text-qblack ${
@@ -189,8 +189,8 @@ export default function Navbar({ className, type }) {
                       <ul className="categories-list">
                         {openSubCategories.subCategorieslist &&
                           openSubCategories.subCategorieslist.length > 0 &&
-                          openSubCategories.subCategorieslist?.map((item) => (
-                            <li className="category-item">
+                          openSubCategories.subCategorieslist?.map((item,index) => (
+                            <li className="category-item" key={index}>
                               <div
                                 className={`flex justify-between items-center px-5 h-10 bg-white  transition-all duration-300 ease-in-out cursor-pointer text-qblack ${
                                   type === 3

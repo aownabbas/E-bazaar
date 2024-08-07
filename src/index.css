@@ -388,3 +388,49 @@ body {
 .MuiSlider-root {
   color: grey !important;
 }
+
+/* TODO: ===============Banner */
+
+.banner-container {
+  @apply h-[485px] w-full 
+}
+
+.ads-container{
+  @apply pt-[30px] pb-[60px]
+}
+
+.qualities-container{
+  @apply w-full bg-white flex flex-col space-y-10 lg:space-y-0 lg:flex-row lg:justify-between lg:items-center lg:h-[110px] px-10 lg:py-0 py-10 mt-10
+}
+/* prev-btn */
+.prev-btn-container{
+  @apply absolute left-[20px] top-1/2 transform -translate-y-1/2 w-[48px] h-[48px] rounded-full flex justify-center items-center border border-custom-orange text-qyellow focus:bg-custom-orange focus:text-white
+}
+
+.next-btn-container{
+  @apply absolute right-[20px] top-1/2 transform -translate-y-1/2 w-[48px] h-[48px] rounded-full flex justify-center items-center border border-custom-orange text-qyellow focus:bg-custom-orange focus:text-white
+}
+
+@media only screen and (max-width: 600px) {
+
+  .banner-container {
+    @apply h-[200px] w-full 
+  }
+
+  .ads-container{
+    @apply pt-[10px] pb-[20px]
+  }
+
+  .qualities-container{
+    @apply mt-7
+  }
+
+  .prev-btn-container{
+    @apply hidden sm:block
+  }
+
+  .next-btn-container{
+    @apply hidden sm:block
+  }
+
+}

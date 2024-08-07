@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CountDown from "../Helpers/CountDown";
 
 export default function CampaignCountDown({
@@ -8,24 +8,24 @@ export default function CampaignCountDown({
   appscreen,
 }) {
   const { showDate, showHour, showMinute, showSecound } = CountDown(lastDate);
-
+  const navigate = useNavigate();
   return (
     <div>
       <div className={`w-full lg:h-[460px] ${className || ""}`}>
         <div className="container-x mx-auto h-full">
           <div className="lg:flex xl:space-x-[30px] lg:space-x-5 items-center h-full">
-            <div
+            <div onClick={()=>navigate('/flash-sale')}
               data-aos="fade-right"
-              className="campaign-countdown lg:w-1/2 h-full w-full mb-5 lg:mb-0"
+              className="campaign-countdown lg:w-1/2 h-full w-full mb-5 lg:mb-0 cursor-pointer"
               style={{
                 background: `url(${
                   import.meta.env.VITE_PUBLIC_URL
-                }/assets/images/campaign-cover-countdown.jpg) no-repeat`,
+                }/assets/images/sale-banner.png) no-repeat`,
                 backgroundSize: "cover",
               }}
             >
               <Link to="/flash-sale">
-                <div className="w-full xl:p-12 p-5">
+                {/* <div className="w-full xl:p-12 p-5">
                   <div className="countdown-wrapper w-full flex lg:justify-between justify-evenly mb-10">
                     <div className="countdown-item">
                       <div className="countdown-number sm:w-[100px] sm:h-[100px] w-[50px] h-[50px] rounded-full bg-white flex justify-center items-center">
@@ -104,7 +104,7 @@ export default function CampaignCountDown({
                       </svg>
                     </span>
                   </div>
-                </div>
+                </div> */}
               </Link>
             </div>
             <div

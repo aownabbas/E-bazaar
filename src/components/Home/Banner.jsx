@@ -69,10 +69,10 @@ export default function Banner({ className }) {
           <div className="main-wrapper w-full">
             <div className="relative">
               <SimpleSlider selector={slider} settings={settings}>
-                {_bannerList && _bannerList.banners && _bannerList.banners.length > 0 && _bannerList.banners.map((item) => (
-                    <div className="h-[485px] w-full ">
+                {_bannerList && _bannerList.banners && _bannerList.banners.length > 0 && _bannerList.banners.map((item,index) => (
+                    <div className="banner-container w-full" key={index}>
                       <img
-                        className="w-full h-full object-cover rounded"
+                        className="w-full h-full object-fill rounded-2"
                         height="100%"
                         width="100%"
                         src={`${_bannerList.url}${item.photo}`}
@@ -84,7 +84,7 @@ export default function Banner({ className }) {
               <button
                 onClick={prev}
                 type="button"
-                className="prev-btn absolute left-[20px] top-1/2 transform -translate-y-1/2 w-[48px] h-[48px] rounded-full flex justify-center items-center border border-custom-orange text-qyellow focus:bg-custom-orange focus:text-white"
+                className="prev-btn-container"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -104,7 +104,7 @@ export default function Banner({ className }) {
               <button
                 onClick={next}
                 type="button"
-                className="next-btn absolute right-[20px] top-1/2 transform -translate-y-1/2 w-[48px] h-[48px] rounded-full flex justify-center items-center border border-custom-orange text-qyellow focus:bg-custom-orange focus:text-white"
+                className="next-btn-container"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -124,7 +124,7 @@ export default function Banner({ className }) {
             </div>
             <div
               data-aos="fade-up"
-              className="best-services w-full bg-white flex flex-col space-y-10 lg:space-y-0 lg:flex-row lg:justify-between lg:items-center lg:h-[110px] px-10 lg:py-0 py-10 mt-10"
+              className="best-services qualities-container"
             >
               <div className="item">
                 <div className="flex space-x-5 items-center">

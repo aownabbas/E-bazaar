@@ -22,7 +22,7 @@ export default function Home() {
 
   return (
     <>
-      <Layout>
+      <Layout childrenClasses="ads-container">
         {/* {ads && <Ads handler={adsHandle} />} */}
         <div className="btn w-5 h-5"></div>
         <Banner className="banner-wrapper mb-[60px]" />
@@ -67,14 +67,14 @@ export default function Home() {
         >
           <BestSellers />
         </ViewMoreTitle>
-        <ProductsAds
+        {/* <ProductsAds
           ads={[
             `${import.meta.env.VITE_PUBLIC_URL}/assets/images/ads-1.png`,
             `${import.meta.env.VITE_PUBLIC_URL}/assets/images/ads-2.png`,
           ]}
           sectionHeight="sm:h-[295px] h-full"
           className="products-ads-section mb-[60px]"
-        />
+        /> */}
         <SectionStyleOne
           categoryBackground={`${
             import.meta.env.VITE_PUBLIC_URL

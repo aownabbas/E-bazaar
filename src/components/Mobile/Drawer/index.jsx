@@ -125,8 +125,8 @@ export default function Drawer({ className, open, action }) {
               <ul className="categories-list">
                 {categoriesList &&
                   categoriesList.length > 0 &&
-                  categoriesList?.map((item) => (
-                    <li className="category-item">
+                  categoriesList?.map((item,index) => (
+                    <li className="category-item" key={index}>
                       <Link to="/all-products">
                         <div className=" flex justify-between items-center px-5 h-12 bg-white hover:bg-qyellow transition-all duration-300 ease-in-out cursor-pointer">
                           <div className="flex items-center space-x-6">

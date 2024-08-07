@@ -53,7 +53,7 @@ export default function ProductsFilter({
           <div className="filter-items">
             <ul>
               {categoriesList?.map((item) => (
-                <li className="item flex justify-between items-center mb-5">
+                <li className="item flex justify-between items-center mb-5" key={item.id}>
                   <div className="flex space-x-[14px] items-center">
                     <div>
                       <Checkbox

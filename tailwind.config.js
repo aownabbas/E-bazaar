@@ -12,7 +12,7 @@ export default {
         qgray: "#797979",
         qblacktext: "#1D1D1D",
         qgraytwo: "#8E8E8E",
-        'custom-orange': '#F7941D',
+        "custom-orange": "#F7941D",
         "qgray-border": "#EFEFEF",
         "qblue-white": "#CBECFF",
         "qh2-green": "#2D6F6D",
@@ -22,6 +22,12 @@ export default {
       },
       scale: {
         60: "0.6",
+      },
+      borderRadius: {
+        1: "0.5rem",
+        2: "0.7rem", // Add custom border-radius values here
+        3: "1rem",
+        4: "1.5rem",
       },
     },
   },

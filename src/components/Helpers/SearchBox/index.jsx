@@ -176,10 +176,10 @@ export default function SearchBox({ className, type }) {
               </li>
               {categoriesList &&
                 categoriesList.length > 0 &&
-                categoriesList?.map((item) => (
+                categoriesList?.map((item,index) => (
                   <li
                     className="category-item border-t border-qgray-border"
-                    onClick={() => handleCategoryClick(item)}
+                    onClick={() => handleCategoryClick(item)} key={index}
                   >
                     <div
                       className={`flex justify-between items-center px-5 h-10 bg-white transition-all duration-300 ease-in-out cursor-pointer text-qblack hover:bg-qyellow`}
